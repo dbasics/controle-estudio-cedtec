@@ -1284,22 +1284,32 @@
         </div>
     </div>
 
-    <!-- Modal Editar -->
-    <div class="modal-overlay" id="modal-edit">
+    <!-- Modal Editar APOSTILA -->
+    <div class="modal-overlay" id="modal-edit-apostila">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Editar Registro</h2>
-                <button class="modal-close" id="modal-edit-close">&times;</button>
+                <h2 class="modal-title">📚 Editar Apostila</h2>
+                <button class="modal-close" onclick="closeModal('modal-edit-apostila')">&times;</button>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Disciplina</label>
-                <input type="text" class="form-input" id="edit-disciplina" readonly>
+                <input type="text" class="form-input" id="edit-ap-disciplina" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Curso</label>
+                <select class="form-select" id="edit-ap-curso"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Carga Horária</label>
+                <input type="number" class="form-input" id="edit-ap-ch">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Status</label>
-                <select class="form-select" id="edit-status">
+                <select class="form-select" id="edit-ap-status">
                     <option value="iniciar">A Iniciar</option>
                     <option value="producao">Em Produção</option>
                     <option value="edicao">Edição</option>
@@ -1309,19 +1319,249 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Responsável</label>
-                <select class="form-select" id="edit-responsavel">
+                <label class="form-label">Diagramador</label>
+                <select class="form-select" id="edit-ap-diagramador">
                     <option value="">Selecione...</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Observações</label>
-                <input type="text" class="form-input" id="edit-obs" placeholder="Observações">
+                <label class="form-label">Prazo</label>
+                <input type="date" class="form-input" id="edit-ap-prazo">
             </div>
 
-            <button class="btn btn-primary" id="btn-atualizar" style="margin-bottom: 12px;">Atualizar</button>
-            <button class="btn btn-danger" id="btn-excluir">Excluir</button>
+            <div class="form-group">
+                <label class="form-label">Referência (Doc Word)</label>
+                <input type="text" class="form-input" id="edit-ap-ref" placeholder="Link do documento">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Capítulos</label>
+                <input type="number" class="form-input" id="edit-ap-capitulos">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Revisão IA</label>
+                <select class="form-select" id="edit-ap-revisaoIA">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Código Revisão</label>
+                <input type="text" class="form-input" id="edit-ap-codRev" placeholder="Ex: PEL-260106-A">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Registro (Livro/Folha)</label>
+                <input type="text" class="form-input" id="edit-ap-registro">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data Início</label>
+                <input type="date" class="form-input" id="edit-ap-dataInicio">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data Fim</label>
+                <input type="date" class="form-input" id="edit-ap-dataFim">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Pagamento</label>
+                <input type="text" class="form-input" id="edit-ap-pgto">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Observações</label>
+                <input type="text" class="form-input" id="edit-ap-obs" placeholder="Observações">
+            </div>
+
+            <button class="btn btn-primary" id="btn-atualizar-apostila" style="margin-bottom: 12px;">Atualizar</button>
+            <button class="btn btn-danger" id="btn-excluir-apostila">Excluir Disciplina</button>
+        </div>
+    </div>
+
+    <!-- Modal Editar SLIDES (Instrucional) -->
+    <div class="modal-overlay" id="modal-edit-slides">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">📑 Editar Slides</h2>
+                <button class="modal-close" onclick="closeModal('modal-edit-slides')">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Disciplina</label>
+                <input type="text" class="form-input" id="edit-sl-disciplina" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Curso</label>
+                <select class="form-select" id="edit-sl-curso"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Carga Horária</label>
+                <input type="number" class="form-input" id="edit-sl-ch">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="edit-sl-status">
+                    <option value="iniciar">A Iniciar</option>
+                    <option value="producao">Em Produção</option>
+                    <option value="edicao">Edição</option>
+                    <option value="revisao">Revisão</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Diagramador</label>
+                <select class="form-select" id="edit-sl-diagramador">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Relatório Gerencial</label>
+                <select class="form-select" id="edit-sl-relatorioG">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Roteiro</label>
+                <select class="form-select" id="edit-sl-roteiro">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Instrucional</label>
+                <select class="form-select" id="edit-sl-instrucional">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Qtd Vídeos OBS Studio</label>
+                <input type="number" class="form-input" id="edit-sl-obs" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Qtd Vídeos Quadro</label>
+                <input type="number" class="form-input" id="edit-sl-quadro" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Qtd Vídeos In Loco</label>
+                <input type="number" class="form-input" id="edit-sl-inLoco" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data Início</label>
+                <input type="date" class="form-input" id="edit-sl-dataInicio">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data Fim</label>
+                <input type="date" class="form-input" id="edit-sl-dataFim">
+            </div>
+
+            <button class="btn btn-primary" id="btn-atualizar-slides" style="margin-bottom: 12px;">Atualizar</button>
+            <button class="btn btn-danger" id="btn-excluir-slides">Excluir Disciplina</button>
+        </div>
+    </div>
+
+    <!-- Modal Editar VIDEOAULA -->
+    <div class="modal-overlay" id="modal-edit-videoaula">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">🎥 Editar Videoaula</h2>
+                <button class="modal-close" onclick="closeModal('modal-edit-videoaula')">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Disciplina</label>
+                <input type="text" class="form-input" id="edit-vi-disciplina" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Curso</label>
+                <select class="form-select" id="edit-vi-curso"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Carga Horária</label>
+                <input type="number" class="form-input" id="edit-vi-ch">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="edit-vi-status">
+                    <option value="iniciar">A Iniciar</option>
+                    <option value="producao">Em Produção</option>
+                    <option value="gravacao">Gravação</option>
+                    <option value="edicao">Edição</option>
+                    <option value="revisao">Revisão</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Operador (Gravação)</label>
+                <select class="form-select" id="edit-vi-operador">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Editor</label>
+                <select class="form-select" id="edit-vi-editor">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Professor</label>
+                <input type="text" class="form-input" id="edit-vi-professor" placeholder="Nome do professor">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Prazo de Entrega</label>
+                <input type="date" class="form-input" id="edit-vi-prazoEntrega">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Qtd Vídeos Editados</label>
+                <input type="number" class="form-input" id="edit-vi-qtdVideos" placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Abertura (After Effects)</label>
+                <select class="form-select" id="edit-vi-abertura">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Minutagem Total</label>
+                <input type="text" class="form-input" id="edit-vi-minutagem" placeholder="Ex: 02:30:00">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data Gravação</label>
+                <input type="date" class="form-input" id="edit-vi-dataGravacao">
+            </div>
+
+            <button class="btn btn-primary" id="btn-atualizar-videoaula" style="margin-bottom: 12px;">Atualizar</button>
+            <button class="btn btn-danger" id="btn-excluir-videoaula">Excluir Disciplina</button>
         </div>
     </div>
 
@@ -1393,6 +1633,7 @@
         let metas = {};
         let currentEditId = null;
         let currentEditType = null;
+        let currentEditDisciplina = null; // Para exclusão em cascata
         let currentDate = new Date();
         let currentMetaMonth = new Date();
         let kanbanFilter = 'todos';
@@ -1476,22 +1717,26 @@
                 document.getElementById('modal-add').classList.remove('active');
             });
 
-            document.getElementById('modal-edit-close').addEventListener('click', () => {
-                document.getElementById('modal-edit').classList.remove('active');
-            });
-
             document.getElementById('modal-score-close').addEventListener('click', () => {
                 document.getElementById('modal-score').classList.remove('active');
             });
 
             document.getElementById('btn-salvar').addEventListener('click', salvarDisciplina);
-            document.getElementById('btn-atualizar').addEventListener('click', atualizarRegistro);
-            document.getElementById('btn-excluir').addEventListener('click', excluirRegistro);
             document.getElementById('btn-salvar-score').addEventListener('click', salvarScore);
             document.getElementById('add-score-btn').addEventListener('click', () => {
                 document.getElementById('score-data').value = new Date().toISOString().split('T')[0];
                 document.getElementById('modal-score').classList.add('active');
             });
+
+            // Botões dos 3 modais de edição
+            document.getElementById('btn-atualizar-apostila').addEventListener('click', () => atualizarApostila());
+            document.getElementById('btn-excluir-apostila').addEventListener('click', () => excluirDisciplina());
+
+            document.getElementById('btn-atualizar-slides').addEventListener('click', () => atualizarSlides());
+            document.getElementById('btn-excluir-slides').addEventListener('click', () => excluirDisciplina());
+
+            document.getElementById('btn-atualizar-videoaula').addEventListener('click', () => atualizarVideoaula());
+            document.getElementById('btn-excluir-videoaula').addEventListener('click', () => excluirDisciplina());
 
             // Fechar modal ao clicar fora
             document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -1499,6 +1744,11 @@
                     if (e.target === modal) modal.classList.remove('active');
                 });
             });
+        }
+
+        // Função global para fechar modais
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
         // Filtros
@@ -1580,6 +1830,7 @@
 
         // Popular Selects
         function populateSelects() {
+            // Select de curso no modal de criação
             const selectCurso = document.getElementById('add-curso');
             cursosRef.forEach(curso => {
                 const opt = document.createElement('option');
@@ -1588,13 +1839,53 @@
                 selectCurso.appendChild(opt);
             });
 
-            const editResp = document.getElementById('edit-responsavel');
-            [...responsaveis.diagramadores, ...responsaveis.editores].forEach(resp => {
-                const opt = document.createElement('option');
-                opt.value = resp;
-                opt.textContent = resp;
-                editResp.appendChild(opt);
+            // Selects de curso nos modais de edição
+            ['edit-ap-curso', 'edit-sl-curso', 'edit-vi-curso'].forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    cursosRef.forEach(curso => {
+                        const opt = document.createElement('option');
+                        opt.value = curso;
+                        opt.textContent = curso;
+                        select.appendChild(opt);
+                    });
+                }
             });
+
+            // Selects de diagramadores (Apostilas e Slides)
+            ['edit-ap-diagramador', 'edit-sl-diagramador'].forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    responsaveis.diagramadores.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d;
+                        opt.textContent = d;
+                        select.appendChild(opt);
+                    });
+                }
+            });
+
+            // Selects de operador (Videoaula)
+            const selectOperador = document.getElementById('edit-vi-operador');
+            if (selectOperador) {
+                responsaveis.operadores.forEach(op => {
+                    const opt = document.createElement('option');
+                    opt.value = op;
+                    opt.textContent = op;
+                    selectOperador.appendChild(opt);
+                });
+            }
+
+            // Selects de editor (Videoaula)
+            const selectEditor = document.getElementById('edit-vi-editor');
+            if (selectEditor) {
+                responsaveis.editores.forEach(ed => {
+                    const opt = document.createElement('option');
+                    opt.value = ed;
+                    opt.textContent = ed;
+                    selectEditor.appendChild(opt);
+                });
+            }
         }
 
         // Carregar dados do Firebase
@@ -1653,6 +1944,7 @@
         }
 
         // Renderizar Apostilas
+        // Campos visíveis no card: Disciplina, Status, Diagramador, Prazo
         function renderApostilas(filter = 'todos', search = '') {
             const container = document.getElementById('lista-apostilas');
             let filtered = [...apostilas];
@@ -1686,8 +1978,8 @@
                         <span class="item-badge ${getBadgeClass(a.status)}">${getStatusLabel(a.status)}</span>
                     </div>
                     <div class="item-meta">
-                        <span>🎓 ${a.curso || '-'}</span>
                         <span>👤 ${a.diagramador || '-'}</span>
+                        <span>📅 ${a.prazo || '-'}</span>
                     </div>
                 </div>
             `).join('');
@@ -1698,6 +1990,7 @@
         }
 
         // Renderizar Slides (Instrucional)
+        // Campos visíveis no card: Disciplina, Status, Diagramador, OBS, Quadro, InLoco
         function renderSlides(filter = 'todos', search = '') {
             const container = document.getElementById('lista-slides');
             let filtered = [...slides];
@@ -1731,9 +2024,10 @@
                         <span class="item-badge ${getBadgeClass(s.status)}">${getStatusLabel(s.status)}</span>
                     </div>
                     <div class="item-meta">
-                        <span>🎓 ${s.curso || '-'}</span>
                         <span>👤 ${s.diagramador || '-'}</span>
-                        <span>📝 ${s.obs || 0} obs</span>
+                        <span>🖥️ OBS: ${s.obs || 0}</span>
+                        <span>📋 Quadro: ${s.quadro || 0}</span>
+                        <span>🏭 Loco: ${s.inLoco || 0}</span>
                     </div>
                 </div>
             `).join('');
@@ -1744,6 +2038,7 @@
         }
 
         // Renderizar Videoaulas
+        // Campos visíveis no card: Disciplina, Status, Operador, Editor, Qtd Vídeos (editados)
         function renderVideoaulas(filter = 'todos', search = '') {
             const container = document.getElementById('lista-videoaulas');
             let filtered = [...videoaulas];
@@ -1777,9 +2072,9 @@
                         <span class="item-badge ${getBadgeClass(v.status)}">${getStatusLabel(v.status)}</span>
                     </div>
                     <div class="item-meta">
-                        <span>🎓 ${v.curso || '-'}</span>
-                        <span>👤 ${v.operador || '-'}</span>
-                        <span>🎬 ${v.qtdVideos || 0} vídeos</span>
+                        <span>🎬 ${v.operador || '-'}</span>
+                        <span>✂️ ${v.editor || '-'}</span>
+                        <span>🎥 ${v.qtdVideos || 0} vídeos</span>
                     </div>
                 </div>
             `).join('');
@@ -2098,87 +2393,198 @@
             }
         }
 
-        // Abrir modal de edicao
+        // Abrir modal de edição específico por tipo
         function openEditModal(id, type) {
             currentEditId = id;
             currentEditType = type;
 
-            let item;
             if (type === 'apostila') {
-                item = apostilas.find(a => a.id === id);
+                const item = apostilas.find(a => a.id === id);
+                if (!item) return;
+                currentEditDisciplina = item.disciplina;
+
+                // Preencher campos
+                document.getElementById('edit-ap-disciplina').value = item.disciplina || '';
+                document.getElementById('edit-ap-curso').value = item.curso || '';
+                document.getElementById('edit-ap-ch').value = item.ch || '';
+                document.getElementById('edit-ap-status').value = item.status || 'iniciar';
+                document.getElementById('edit-ap-diagramador').value = item.diagramador || '';
+                document.getElementById('edit-ap-prazo').value = item.prazo || '';
+                document.getElementById('edit-ap-ref').value = item.ref || '';
+                document.getElementById('edit-ap-capitulos').value = item.capitulos || '';
+                document.getElementById('edit-ap-revisaoIA').value = item.revisaoIA ? 'true' : 'false';
+                document.getElementById('edit-ap-codRev').value = item.codRev || '';
+                document.getElementById('edit-ap-registro').value = item.registro || '';
+                document.getElementById('edit-ap-dataInicio').value = item.dataInicio || '';
+                document.getElementById('edit-ap-dataFim').value = item.dataFim || '';
+                document.getElementById('edit-ap-pgto').value = item.pgto || '';
+                document.getElementById('edit-ap-obs').value = item.obs || '';
+
+                document.getElementById('modal-edit-apostila').classList.add('active');
+
             } else if (type === 'slides') {
-                item = slides.find(s => s.id === id);
-            } else {
-                item = videoaulas.find(v => v.id === id);
+                const item = slides.find(s => s.id === id);
+                if (!item) return;
+                currentEditDisciplina = item.disciplina;
+
+                // Preencher campos
+                document.getElementById('edit-sl-disciplina').value = item.disciplina || '';
+                document.getElementById('edit-sl-curso').value = item.curso || '';
+                document.getElementById('edit-sl-ch').value = item.ch || '';
+                document.getElementById('edit-sl-status').value = item.status || 'iniciar';
+                document.getElementById('edit-sl-diagramador').value = item.diagramador || '';
+                document.getElementById('edit-sl-relatorioG').value = item.relatorioG ? 'true' : 'false';
+                document.getElementById('edit-sl-roteiro').value = item.roteiro ? 'true' : 'false';
+                document.getElementById('edit-sl-instrucional').value = item.instrucional ? 'true' : 'false';
+                document.getElementById('edit-sl-obs').value = item.obs || 0;
+                document.getElementById('edit-sl-quadro').value = item.quadro || 0;
+                document.getElementById('edit-sl-inLoco').value = item.inLoco || 0;
+                document.getElementById('edit-sl-dataInicio').value = item.dataInicio || '';
+                document.getElementById('edit-sl-dataFim').value = item.dataFim || '';
+
+                document.getElementById('modal-edit-slides').classList.add('active');
+
+            } else if (type === 'videoaula' || type === 'video') {
+                const item = videoaulas.find(v => v.id === id);
+                if (!item) return;
+                currentEditDisciplina = item.disciplina;
+
+                // Preencher campos
+                document.getElementById('edit-vi-disciplina').value = item.disciplina || '';
+                document.getElementById('edit-vi-curso').value = item.curso || '';
+                document.getElementById('edit-vi-ch').value = item.ch || '';
+                document.getElementById('edit-vi-status').value = item.status || 'iniciar';
+                document.getElementById('edit-vi-operador').value = item.operador || '';
+                document.getElementById('edit-vi-editor').value = item.editor || '';
+                document.getElementById('edit-vi-professor').value = item.professor || '';
+                document.getElementById('edit-vi-prazoEntrega').value = item.prazoEntrega || '';
+                document.getElementById('edit-vi-qtdVideos').value = item.qtdVideos || 0;
+                document.getElementById('edit-vi-abertura').value = item.abertura ? 'true' : 'false';
+                document.getElementById('edit-vi-minutagem').value = item.minutagem || '';
+                document.getElementById('edit-vi-dataGravacao').value = item.dataGravacao || '';
+
+                document.getElementById('modal-edit-videoaula').classList.add('active');
             }
-
-            if (!item) return;
-
-            document.getElementById('edit-disciplina').value = item.disciplina || '';
-            document.getElementById('edit-status').value = item.status || 'iniciar';
-            document.getElementById('edit-responsavel').value = item.diagramador || item.operador || '';
-            document.getElementById('edit-obs').value = item.obs || '';
-
-            document.getElementById('modal-edit').classList.add('active');
         }
 
-        // Atualizar registro
-        async function atualizarRegistro() {
-            if (!currentEditId || !currentEditType) return;
-
-            const status = document.getElementById('edit-status').value;
-            const responsavel = document.getElementById('edit-responsavel').value;
-            const obs = document.getElementById('edit-obs').value;
+        // Atualizar APOSTILA
+        async function atualizarApostila() {
+            if (!currentEditId) return;
 
             try {
-                let collectionName;
-                let updateData = {
-                    status,
-                    obs,
+                const updateData = {
+                    curso: document.getElementById('edit-ap-curso').value,
+                    ch: parseInt(document.getElementById('edit-ap-ch').value) || 0,
+                    status: document.getElementById('edit-ap-status').value,
+                    diagramador: document.getElementById('edit-ap-diagramador').value,
+                    prazo: document.getElementById('edit-ap-prazo').value,
+                    ref: document.getElementById('edit-ap-ref').value,
+                    capitulos: parseInt(document.getElementById('edit-ap-capitulos').value) || 0,
+                    revisaoIA: document.getElementById('edit-ap-revisaoIA').value === 'true',
+                    codRev: document.getElementById('edit-ap-codRev').value,
+                    registro: document.getElementById('edit-ap-registro').value,
+                    dataInicio: document.getElementById('edit-ap-dataInicio').value,
+                    dataFim: document.getElementById('edit-ap-dataFim').value,
+                    pgto: document.getElementById('edit-ap-pgto').value,
+                    obs: document.getElementById('edit-ap-obs').value,
                     updatedAt: serverTimestamp()
                 };
 
-                if (currentEditType === 'apostila') {
-                    collectionName = 'apostilas';
-                    updateData.diagramador = responsavel;
-                } else if (currentEditType === 'slides') {
-                    collectionName = 'instrucional';
-                    updateData.diagramador = responsavel;
-                } else {
-                    collectionName = 'videoaulas';
-                    updateData.operador = responsavel;
-                }
+                await updateDoc(doc(db, 'apostilas', currentEditId), updateData);
 
-                await updateDoc(doc(db, collectionName, currentEditId), updateData);
-
-                showToast('Atualizado!', 'success');
-                document.getElementById('modal-edit').classList.remove('active');
+                showToast('Apostila atualizada!', 'success');
+                document.getElementById('modal-edit-apostila').classList.remove('active');
             } catch (error) {
                 console.error(error);
                 showToast('Erro ao atualizar', 'error');
             }
         }
 
-        // Excluir registro
-        async function excluirRegistro() {
-            if (!currentEditId || !currentEditType) return;
-
-            if (!confirm('Tem certeza que deseja excluir?')) return;
+        // Atualizar SLIDES
+        async function atualizarSlides() {
+            if (!currentEditId) return;
 
             try {
-                let collectionName;
-                if (currentEditType === 'apostila') {
-                    collectionName = 'apostilas';
-                } else if (currentEditType === 'slides') {
-                    collectionName = 'instrucional';
-                } else {
-                    collectionName = 'videoaulas';
-                }
+                const updateData = {
+                    curso: document.getElementById('edit-sl-curso').value,
+                    ch: parseInt(document.getElementById('edit-sl-ch').value) || 0,
+                    status: document.getElementById('edit-sl-status').value,
+                    diagramador: document.getElementById('edit-sl-diagramador').value,
+                    relatorioG: document.getElementById('edit-sl-relatorioG').value === 'true',
+                    roteiro: document.getElementById('edit-sl-roteiro').value === 'true',
+                    instrucional: document.getElementById('edit-sl-instrucional').value === 'true',
+                    obs: parseInt(document.getElementById('edit-sl-obs').value) || 0,
+                    quadro: parseInt(document.getElementById('edit-sl-quadro').value) || 0,
+                    inLoco: parseInt(document.getElementById('edit-sl-inLoco').value) || 0,
+                    dataInicio: document.getElementById('edit-sl-dataInicio').value,
+                    dataFim: document.getElementById('edit-sl-dataFim').value,
+                    updatedAt: serverTimestamp()
+                };
 
-                await deleteDoc(doc(db, collectionName, currentEditId));
+                await updateDoc(doc(db, 'instrucional', currentEditId), updateData);
 
-                showToast('Excluído!', 'success');
-                document.getElementById('modal-edit').classList.remove('active');
+                showToast('Slides atualizados!', 'success');
+                document.getElementById('modal-edit-slides').classList.remove('active');
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao atualizar', 'error');
+            }
+        }
+
+        // Atualizar VIDEOAULA
+        async function atualizarVideoaula() {
+            if (!currentEditId) return;
+
+            try {
+                const updateData = {
+                    curso: document.getElementById('edit-vi-curso').value,
+                    ch: parseInt(document.getElementById('edit-vi-ch').value) || 0,
+                    status: document.getElementById('edit-vi-status').value,
+                    operador: document.getElementById('edit-vi-operador').value,
+                    editor: document.getElementById('edit-vi-editor').value,
+                    professor: document.getElementById('edit-vi-professor').value,
+                    prazoEntrega: document.getElementById('edit-vi-prazoEntrega').value,
+                    qtdVideos: parseInt(document.getElementById('edit-vi-qtdVideos').value) || 0,
+                    abertura: document.getElementById('edit-vi-abertura').value === 'true',
+                    minutagem: document.getElementById('edit-vi-minutagem').value,
+                    dataGravacao: document.getElementById('edit-vi-dataGravacao').value,
+                    updatedAt: serverTimestamp()
+                };
+
+                await updateDoc(doc(db, 'videoaulas', currentEditId), updateData);
+
+                showToast('Videoaula atualizada!', 'success');
+                document.getElementById('modal-edit-videoaula').classList.remove('active');
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao atualizar', 'error');
+            }
+        }
+
+        // Excluir DISCIPLINA (em cascata nas 3 coleções)
+        async function excluirDisciplina() {
+            if (!currentEditId || !currentEditDisciplina) return;
+
+            const confirmMsg = `Tem certeza?\n\nEsta ação é IRREVERSÍVEL e removerá a disciplina "${currentEditDisciplina}" de:\n• Apostilas\n• Slides\n• Videoaulas`;
+
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                // Encontrar o ID em cada coleção baseado no nome da disciplina
+                const apItem = apostilas.find(a => a.disciplina === currentEditDisciplina);
+                const slItem = slides.find(s => s.disciplina === currentEditDisciplina);
+                const viItem = videoaulas.find(v => v.disciplina === currentEditDisciplina);
+
+                // Deletar de cada coleção
+                if (apItem) await deleteDoc(doc(db, 'apostilas', apItem.id));
+                if (slItem) await deleteDoc(doc(db, 'instrucional', slItem.id));
+                if (viItem) await deleteDoc(doc(db, 'videoaulas', viItem.id));
+
+                showToast('Disciplina excluída das 3 coleções!', 'success');
+
+                // Fechar modal ativo
+                document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+
             } catch (error) {
                 console.error(error);
                 showToast('Erro ao excluir', 'error');
