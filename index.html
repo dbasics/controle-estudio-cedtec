@@ -29,6 +29,7 @@
             --warning: #f59e0b;
             --danger: #ef4444;
             --info: #3b82f6;
+            --cyan: #06b6d4;
         }
 
         body {
@@ -42,58 +43,157 @@
         /* Header */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            padding: 20px;
+            padding: 16px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .header h1 {
-            font-size: 1.25rem;
+        .header-left h1 {
+            font-size: 1.1rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .header-subtitle {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.8);
-            margin-top: 4px;
-        }
-
-        /* Tabs de Navegacao */
-        .tabs {
-            display: flex;
-            background: var(--bg-card);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .tab {
-            flex: 1;
-            min-width: 80px;
-            padding: 12px 8px;
-            text-align: center;
             font-size: 0.7rem;
-            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            margin-top: 2px;
+        }
+
+        /* Menu Hamburguer */
+        .menu-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sidebar Menu */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 201;
+            transition: right 0.3s ease;
+            padding: 20px;
+        }
+
+        .sidebar-overlay.active .sidebar {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
             color: var(--text-secondary);
-            border-bottom: 2px solid transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--primary);
+        }
+
+        /* Barra Inferior - 5 botões principais */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 100;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
-            white-space: nowrap;
+            border: none;
+            background: none;
         }
 
-        .tab.active {
+        .nav-item.active {
             color: var(--primary);
-            border-bottom-color: var(--primary);
-            background: rgba(79, 70, 229, 0.1);
         }
 
-        .tab-icon {
-            font-size: 1.2rem;
+        .nav-item .nav-icon {
+            font-size: 1.3rem;
             margin-bottom: 4px;
-            display: block;
         }
 
         /* Container Principal */
@@ -211,6 +311,7 @@
         .badge-warning { background: rgba(245,158,11,0.2); color: var(--warning); }
         .badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
         .badge-info { background: rgba(59,130,246,0.2); color: var(--info); }
+        .badge-cyan { background: rgba(6,182,212,0.2); color: var(--cyan); }
 
         .item-meta {
             display: flex;
@@ -571,46 +672,290 @@
             font-weight: 500;
             margin-top: 4px;
         }
+
+        /* ============== KANBAN ============== */
+        .kanban-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .kanban-column {
+            min-width: 280px;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .kanban-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .kanban-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kanban-count {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+        }
+
+        .kanban-header.iniciar { border-bottom-color: var(--cyan); }
+        .kanban-header.producao { border-bottom-color: var(--info); }
+        .kanban-header.revisao { border-bottom-color: var(--warning); }
+        .kanban-header.concluido { border-bottom-color: var(--success); }
+
+        .kanban-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .kanban-card {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .kanban-card-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .kanban-card-meta {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 8px;
+        }
+
+        .kanban-card-type {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            margin-top: 8px;
+        }
+
+        .type-apostila { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .type-slides { background: rgba(168,85,247,0.2); color: #a855f7; }
+        .type-video { background: rgba(34,197,94,0.2); color: #22c55e; }
+
+        /* Kanban Filter Tabs */
+        .kanban-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .kanban-filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+        }
+
+        .kanban-filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ============== METAS ============== */
+        .metas-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .meta-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .meta-card-header {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .meta-progress {
+            position: relative;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 12px 0 8px;
+        }
+
+        .meta-progress-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .meta-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .meta-gravacoes .meta-progress-bar { background: var(--info); }
+        .meta-gravacoes .meta-current { color: var(--info); }
+
+        .meta-edicoes .meta-progress-bar { background: var(--warning); }
+        .meta-edicoes .meta-current { color: var(--warning); }
+
+        .meta-apostilas .meta-progress-bar { background: var(--danger); }
+        .meta-apostilas .meta-current { color: var(--danger); }
+
+        .meta-slides .meta-progress-bar { background: #a855f7; }
+        .meta-slides .meta-current { color: #a855f7; }
+
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .month-selector button {
+            background: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .month-selector .current-month {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .daily-log {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .daily-log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .daily-log-header h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .add-score-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .daily-entries {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .daily-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .entry-date {
+            color: var(--text-secondary);
+        }
+
+        .entry-values {
+            display: flex;
+            gap: 12px;
+        }
+
+        .entry-value {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <h1>
-            <span>🎬</span>
-            Controle do Estúdio
-        </h1>
-        <p class="header-subtitle">CEDTEC - Produção de Material Didático</p>
+        <div class="header-left">
+            <h1>
+                <span>🎬</span>
+                Controle do Estúdio
+            </h1>
+            <p class="header-subtitle">CEDTEC - Produção de Material Didático</p>
+        </div>
+        <button class="menu-btn" id="menu-btn">☰</button>
     </header>
 
-    <!-- Tabs -->
-    <nav class="tabs">
-        <div class="tab active" data-page="dashboard">
-            <span class="tab-icon">📊</span>
-            Dashboard
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebar-overlay">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Menu</h2>
+                <button class="sidebar-close" id="sidebar-close">×</button>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="cursos">🎓 Cursos</a></li>
+                <li><a href="#" data-page="agenda">📅 Agenda</a></li>
+                <li><a href="#" data-page="kanban">📋 Kanban</a></li>
+                <li><a href="#" data-page="config">⚙️ Configurações</a></li>
+            </ul>
         </div>
-        <div class="tab" data-page="apostilas">
-            <span class="tab-icon">📚</span>
-            Apostilas
-        </div>
-        <div class="tab" data-page="videoaulas">
-            <span class="tab-icon">🎥</span>
-            Vídeos
-        </div>
-        <div class="tab" data-page="cursos">
-            <span class="tab-icon">🎓</span>
-            Cursos
-        </div>
-        <div class="tab" data-page="agenda">
-            <span class="tab-icon">📅</span>
-            Agenda
-        </div>
-    </nav>
+    </div>
 
     <!-- Pages -->
     <main class="container">
-        <!-- Dashboard -->
-        <div id="page-dashboard" class="page active">
+        <!-- Home -->
+        <div id="page-home" class="page active">
             <div class="stats-grid">
                 <div class="stat-card large">
                     <svg class="progress-ring" viewBox="0 0 120 120">
@@ -656,6 +1001,7 @@
             </div>
             <div class="filters" id="filtros-apostilas">
                 <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="iniciar">A Iniciar</button>
                 <button class="filter-btn" data-filter="producao">Em Produção</button>
                 <button class="filter-btn" data-filter="revisao">Revisão</button>
                 <button class="filter-btn" data-filter="concluido">Concluído</button>
@@ -665,7 +1011,24 @@
             </div>
         </div>
 
-        <!-- Videoaulas -->
+        <!-- Slides (Instrucional) -->
+        <div id="page-slides" class="page">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar slides..." id="search-slides">
+            </div>
+            <div class="filters" id="filtros-slides">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="iniciar">A Iniciar</button>
+                <button class="filter-btn" data-filter="edicao">Edição</button>
+                <button class="filter-btn" data-filter="concluido">Concluído</button>
+            </div>
+            <div id="lista-slides" class="item-list">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Vídeos -->
         <div id="page-videoaulas" class="page">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
@@ -673,12 +1036,84 @@
             </div>
             <div class="filters" id="filtros-videoaulas">
                 <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="iniciar">A Iniciar</button>
                 <button class="filter-btn" data-filter="gravacao">Gravação</button>
                 <button class="filter-btn" data-filter="edicao">Edição</button>
                 <button class="filter-btn" data-filter="concluido">Concluído</button>
             </div>
             <div id="lista-videoaulas" class="item-list">
                 <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Metas -->
+        <div id="page-metas" class="page">
+            <div class="month-selector">
+                <button id="prev-month">← Anterior</button>
+                <span class="current-month" id="current-month">Janeiro 2026</span>
+                <button id="next-month">Próximo →</button>
+            </div>
+
+            <div class="metas-grid">
+                <div class="meta-card meta-gravacoes">
+                    <div class="meta-card-header">🎬 Gravações</div>
+                    <div class="meta-current" id="meta-gravacoes-atual">0</div>
+                    <div class="meta-progress">
+                        <div class="meta-progress-bar" id="meta-gravacoes-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="meta-values">
+                        <span>Meta: <span id="meta-gravacoes-meta">120</span></span>
+                        <span id="meta-gravacoes-pct">0%</span>
+                    </div>
+                </div>
+
+                <div class="meta-card meta-edicoes">
+                    <div class="meta-card-header">✂️ Edições</div>
+                    <div class="meta-current" id="meta-edicoes-atual">0</div>
+                    <div class="meta-progress">
+                        <div class="meta-progress-bar" id="meta-edicoes-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="meta-values">
+                        <span>Meta: <span id="meta-edicoes-meta">120</span></span>
+                        <span id="meta-edicoes-pct">0%</span>
+                    </div>
+                </div>
+
+                <div class="meta-card meta-apostilas">
+                    <div class="meta-card-header">📚 Apostilas</div>
+                    <div class="meta-current" id="meta-apostilas-atual">0</div>
+                    <div class="meta-progress">
+                        <div class="meta-progress-bar" id="meta-apostilas-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="meta-values">
+                        <span>Meta: <span id="meta-apostilas-meta">12</span></span>
+                        <span id="meta-apostilas-pct">0%</span>
+                    </div>
+                </div>
+
+                <div class="meta-card meta-slides">
+                    <div class="meta-card-header">📑 Slides</div>
+                    <div class="meta-current" id="meta-slides-atual">0</div>
+                    <div class="meta-progress">
+                        <div class="meta-progress-bar" id="meta-slides-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="meta-values">
+                        <span>Meta: <span id="meta-slides-meta">80</span></span>
+                        <span id="meta-slides-pct">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="daily-log">
+                <div class="daily-log-header">
+                    <h3>📊 Registro Diário</h3>
+                    <button class="add-score-btn" id="add-score-btn">+ Adicionar</button>
+                </div>
+                <div class="daily-entries" id="daily-entries">
+                    <div class="empty-state">
+                        <p>Nenhum registro neste mês</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -716,7 +1151,102 @@
                 <div id="slots-noite"></div>
             </div>
         </div>
+
+        <!-- Kanban -->
+        <div id="page-kanban" class="page">
+            <div class="kanban-filters">
+                <button class="kanban-filter-btn active" data-type="todos">Todos</button>
+                <button class="kanban-filter-btn" data-type="apostila">📚 Apostilas</button>
+                <button class="kanban-filter-btn" data-type="slides">📑 Slides</button>
+                <button class="kanban-filter-btn" data-type="video">🎥 Vídeos</button>
+            </div>
+
+            <div class="kanban-container" id="kanban-container">
+                <!-- Coluna A Iniciar -->
+                <div class="kanban-column">
+                    <div class="kanban-header iniciar">
+                        <h3>🔵 A Iniciar</h3>
+                        <span class="kanban-count" id="kanban-count-iniciar">0</span>
+                    </div>
+                    <div class="kanban-items" id="kanban-iniciar"></div>
+                </div>
+
+                <!-- Coluna Em Produção -->
+                <div class="kanban-column">
+                    <div class="kanban-header producao">
+                        <h3>🔷 Em Produção</h3>
+                        <span class="kanban-count" id="kanban-count-producao">0</span>
+                    </div>
+                    <div class="kanban-items" id="kanban-producao"></div>
+                </div>
+
+                <!-- Coluna Revisão -->
+                <div class="kanban-column">
+                    <div class="kanban-header revisao">
+                        <h3>🟡 Revisão</h3>
+                        <span class="kanban-count" id="kanban-count-revisao">0</span>
+                    </div>
+                    <div class="kanban-items" id="kanban-revisao"></div>
+                </div>
+
+                <!-- Coluna Concluído -->
+                <div class="kanban-column">
+                    <div class="kanban-header concluido">
+                        <h3>✅ Concluído</h3>
+                        <span class="kanban-count" id="kanban-count-concluido">0</span>
+                    </div>
+                    <div class="kanban-items" id="kanban-concluido"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Config -->
+        <div id="page-config" class="page">
+            <h3 class="section-title">Configurações</h3>
+            <div class="item-list">
+                <div class="item-card">
+                    <div class="item-title">👤 Perfil do Usuário</div>
+                    <div class="item-meta"><span>Em breve: login e sincronização</span></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-title">🔔 Notificações</div>
+                    <div class="item-meta"><span>Configurar alertas de prazo</span></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-title">🎨 Tema</div>
+                    <div class="item-meta"><span>Modo escuro (ativo)</span></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-title">📊 Exportar Dados</div>
+                    <div class="item-meta"><span>Gerar relatório em PDF</span></div>
+                </div>
+            </div>
+        </div>
     </main>
+
+    <!-- Bottom Navigation - 5 principais -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-page="home">
+            <span class="nav-icon">🏠</span>
+            Home
+        </button>
+        <button class="nav-item" data-page="apostilas">
+            <span class="nav-icon">📚</span>
+            Apostilas
+        </button>
+        <button class="nav-item" data-page="slides">
+            <span class="nav-icon">📑</span>
+            Slides
+        </button>
+        <button class="nav-item" data-page="videoaulas">
+            <span class="nav-icon">🎥</span>
+            Vídeos
+        </button>
+        <button class="nav-item" data-page="metas">
+            <span class="nav-icon">🎯</span>
+            Metas
+        </button>
+    </nav>
 
     <!-- FAB -->
     <button class="fab" id="fab-add">+</button>
@@ -725,22 +1255,13 @@
     <div class="modal-overlay" id="modal-add">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Novo Registro</h2>
+                <h2 class="modal-title">Nova Disciplina</h2>
                 <button class="modal-close" id="modal-close">&times;</button>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Tipo</label>
-                <select class="form-select" id="add-tipo">
-                    <option value="apostila">Apostila</option>
-                    <option value="videoaula">Videoaula</option>
-                    <option value="agendamento">Agendamento</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Disciplina</label>
-                <input type="text" class="form-input" id="add-disciplina" placeholder="Nome da disciplina">
+                <label class="form-label">Nome da Disciplina</label>
+                <input type="text" class="form-input" id="add-disciplina" placeholder="Ex: PEL - Pelotização">
             </div>
 
             <div class="form-group">
@@ -750,24 +1271,16 @@
                 </select>
             </div>
 
-            <div class="form-group" id="grupo-responsavel">
-                <label class="form-label">Responsável</label>
-                <select class="form-select" id="add-responsavel">
-                    <option value="">Selecione...</option>
-                </select>
-            </div>
-
             <div class="form-group">
-                <label class="form-label">Status</label>
-                <select class="form-select" id="add-status">
-                    <option value="pendente">Pendente</option>
-                    <option value="producao">Em Produção</option>
-                    <option value="revisao">Revisão</option>
-                    <option value="concluido">Concluído</option>
-                </select>
+                <label class="form-label">Carga Horária</label>
+                <input type="number" class="form-input" id="add-ch" placeholder="Ex: 40">
             </div>
 
-            <button class="btn btn-primary" id="btn-salvar">Salvar</button>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 16px;">
+                ℹ️ Ao criar uma disciplina, ela será automaticamente adicionada em Apostilas, Slides e Videoaulas.
+            </p>
+
+            <button class="btn btn-primary" id="btn-salvar">Criar Disciplina</button>
         </div>
     </div>
 
@@ -787,8 +1300,9 @@
             <div class="form-group">
                 <label class="form-label">Status</label>
                 <select class="form-select" id="edit-status">
-                    <option value="pendente">Pendente</option>
+                    <option value="iniciar">A Iniciar</option>
                     <option value="producao">Em Produção</option>
+                    <option value="edicao">Edição</option>
                     <option value="revisao">Revisão</option>
                     <option value="concluido">Concluído</option>
                 </select>
@@ -811,13 +1325,50 @@
         </div>
     </div>
 
+    <!-- Modal Score Diário -->
+    <div class="modal-overlay" id="modal-score">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Registrar Produção</h2>
+                <button class="modal-close" id="modal-score-close">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Data</label>
+                <input type="date" class="form-input" id="score-data">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">🎬 Gravações</label>
+                <input type="number" class="form-input" id="score-gravacoes" placeholder="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">✂️ Edições</label>
+                <input type="number" class="form-input" id="score-edicoes" placeholder="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📚 Apostilas Concluídas</label>
+                <input type="number" class="form-input" id="score-apostilas" placeholder="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📑 Slides/Instrucionais</label>
+                <input type="number" class="form-input" id="score-slides" placeholder="0" value="0">
+            </div>
+
+            <button class="btn btn-primary" id="btn-salvar-score">Salvar Registro</button>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDocs, getDoc, setDoc, addDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         // Firebase Config
         const firebaseConfig = {
@@ -826,8 +1377,7 @@
             projectId: "controle-estudio-cedtec",
             storageBucket: "controle-estudio-cedtec.firebasestorage.app",
             messagingSenderId: "883985328650",
-            appId: "1:883985328650:web:9d64ae88dc090a54b4cdf3",
-            measurementId: "G-RHMC2HZNY2"
+            appId: "1:883985328650:web:9d64ae88dc090a54b4cdf3"
         };
 
         // Initialize Firebase
@@ -836,47 +1386,82 @@
 
         // Estado da Aplicacao
         let apostilas = [];
+        let slides = []; // instrucional
         let videoaulas = [];
         let cursos = [];
         let agendamentos = [];
+        let metas = {};
         let currentEditId = null;
         let currentEditType = null;
         let currentDate = new Date();
+        let currentMetaMonth = new Date();
+        let kanbanFilter = 'todos';
 
         // Dados de referencia
         const cursosRef = [
-            'Enfermagem', 'Radiologia', 'Seguranca do Trabalho', 'Informatica',
-            'Administracao', 'Contabilidade', 'Logistica', 'RH', 'Marketing',
-            'Design Grafico', 'Desenvolvimento Web', 'Eletrotecnica', 'Mecanica',
-            'Quimica', 'Meio Ambiente', 'Edificacoes', 'Agrimensura', 'Agroindustria',
-            'Mineracao', 'Petroleo e Gas', 'Automacao', 'Eletroeletronica',
-            'Refrigeracao', 'Metalurgia'
+            'MIN - Mineração', 'EJA - Supletivo EAD', 'QUA - Qualificação', 'QUI - Química',
+            'MET - Metalurgia', 'INS - Instrumentação', 'DPA - Disc. Padrão', 'MEC - Mecânica',
+            'SEG - Seg. do Trabalho', 'CNV - Construção Naval', 'ADM - Administração'
         ];
 
         const responsaveis = {
-            editores: ['Erick', 'Isabela', 'Lara', 'Leticia', 'Magna', 'Mateus', 'Diego', 'Deiv', 'Kathleen'],
-            diagramadores: ['Erick', 'Kathleen', 'Joao'],
-            professores: ['Marcelo', 'Fabricio', 'Joana', 'Renan', 'Rodrigo', 'Priscila', 'Nara', 'Nane', 'Edson', 'Felipe', 'Sergio', 'Helon']
+            diagramadores: ['Erick', 'Kathleen', 'Magna', 'Letícia', 'Isabela', 'Vários'],
+            editores: ['Diego', 'Erick', 'Felipe'],
+            operadores: ['Diego', 'Erick']
         };
 
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
-            initTabs();
+            initNavigation();
+            initSidebar();
             initModals();
             initFilters();
             initAgenda();
+            initMetas();
+            initKanban();
             populateSelects();
             loadData();
         });
 
-        // Navegacao por Tabs
-        function initTabs() {
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                    tab.classList.add('active');
-                    document.getElementById('page-' + tab.dataset.page).classList.add('active');
+        // Navegacao
+        function initNavigation() {
+            // Bottom nav
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.addEventListener('click', () => {
+                    switchPage(nav.dataset.page);
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    nav.classList.add('active');
+                });
+            });
+        }
+
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageName)?.classList.add('active');
+        }
+
+        // Sidebar
+        function initSidebar() {
+            document.getElementById('menu-btn').addEventListener('click', () => {
+                document.getElementById('sidebar-overlay').classList.add('active');
+            });
+
+            document.getElementById('sidebar-close').addEventListener('click', () => {
+                document.getElementById('sidebar-overlay').classList.remove('active');
+            });
+
+            document.getElementById('sidebar-overlay').addEventListener('click', (e) => {
+                if (e.target.id === 'sidebar-overlay') {
+                    e.target.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchPage(link.dataset.page);
+                    document.getElementById('sidebar-overlay').classList.remove('active');
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                 });
             });
         }
@@ -895,9 +1480,18 @@
                 document.getElementById('modal-edit').classList.remove('active');
             });
 
-            document.getElementById('btn-salvar').addEventListener('click', salvarRegistro);
+            document.getElementById('modal-score-close').addEventListener('click', () => {
+                document.getElementById('modal-score').classList.remove('active');
+            });
+
+            document.getElementById('btn-salvar').addEventListener('click', salvarDisciplina);
             document.getElementById('btn-atualizar').addEventListener('click', atualizarRegistro);
             document.getElementById('btn-excluir').addEventListener('click', excluirRegistro);
+            document.getElementById('btn-salvar-score').addEventListener('click', salvarScore);
+            document.getElementById('add-score-btn').addEventListener('click', () => {
+                document.getElementById('score-data').value = new Date().toISOString().split('T')[0];
+                document.getElementById('modal-score').classList.add('active');
+            });
 
             // Fechar modal ao clicar fora
             document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -917,6 +1511,8 @@
 
                         if (filterContainer.id === 'filtros-apostilas') {
                             renderApostilas(btn.dataset.filter);
+                        } else if (filterContainer.id === 'filtros-slides') {
+                            renderSlides(btn.dataset.filter);
                         } else if (filterContainer.id === 'filtros-videoaulas') {
                             renderVideoaulas(btn.dataset.filter);
                         }
@@ -927,6 +1523,10 @@
             // Busca
             document.getElementById('search-apostilas').addEventListener('input', (e) => {
                 renderApostilas('todos', e.target.value);
+            });
+
+            document.getElementById('search-slides').addEventListener('input', (e) => {
+                renderSlides('todos', e.target.value);
             });
 
             document.getElementById('search-videoaulas').addEventListener('input', (e) => {
@@ -953,6 +1553,31 @@
             renderAgenda();
         }
 
+        // Metas
+        function initMetas() {
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentMetaMonth.setMonth(currentMetaMonth.getMonth() - 1);
+                renderMetas();
+            });
+
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentMetaMonth.setMonth(currentMetaMonth.getMonth() + 1);
+                renderMetas();
+            });
+        }
+
+        // Kanban
+        function initKanban() {
+            document.querySelectorAll('.kanban-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.kanban-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    kanbanFilter = btn.dataset.type;
+                    renderKanban();
+                });
+            });
+        }
+
         // Popular Selects
         function populateSelects() {
             const selectCurso = document.getElementById('add-curso');
@@ -963,13 +1588,11 @@
                 selectCurso.appendChild(opt);
             });
 
-            const selectResp = document.getElementById('add-responsavel');
             const editResp = document.getElementById('edit-responsavel');
-            [...responsaveis.editores, ...responsaveis.diagramadores].forEach(resp => {
+            [...responsaveis.diagramadores, ...responsaveis.editores].forEach(resp => {
                 const opt = document.createElement('option');
                 opt.value = resp;
                 opt.textContent = resp;
-                selectResp.appendChild(opt.cloneNode(true));
                 editResp.appendChild(opt);
             });
         }
@@ -982,6 +1605,16 @@
                 apostilas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderApostilas();
                 updateDashboard();
+                renderKanban();
+            });
+
+            // Listener para slides/instrucional
+            const qSlides = query(collection(db, 'instrucional'), orderBy('createdAt', 'desc'));
+            onSnapshot(qSlides, (snapshot) => {
+                slides = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderSlides();
+                updateDashboard();
+                renderKanban();
             });
 
             // Listener para videoaulas
@@ -990,6 +1623,7 @@
                 videoaulas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderVideoaulas();
                 updateDashboard();
+                renderKanban();
             });
 
             // Listener para cursos
@@ -1005,6 +1639,17 @@
                 agendamentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 renderAgenda();
             });
+
+            // Carregar metas
+            loadMetas();
+        }
+
+        async function loadMetas() {
+            const metasDoc = await getDoc(doc(db, 'metas', '2026'));
+            if (metasDoc.exists()) {
+                metas = metasDoc.data();
+                renderMetas();
+            }
         }
 
         // Renderizar Apostilas
@@ -1038,18 +1683,63 @@
                 <div class="item-card" data-id="${a.id}" data-type="apostila">
                     <div class="item-header">
                         <span class="item-title">${a.disciplina || 'Sem nome'}</span>
-                        <span class="item-badge ${getBadgeClass(a.status)}">${a.status || 'pendente'}</span>
+                        <span class="item-badge ${getBadgeClass(a.status)}">${getStatusLabel(a.status)}</span>
                     </div>
                     <div class="item-meta">
                         <span>🎓 ${a.curso || '-'}</span>
-                        <span>👤 ${a.responsavel || '-'}</span>
+                        <span>👤 ${a.diagramador || '-'}</span>
                     </div>
                 </div>
             `).join('');
 
-            // Eventos de clique
             container.querySelectorAll('.item-card').forEach(card => {
                 card.addEventListener('click', () => openEditModal(card.dataset.id, 'apostila'));
+            });
+        }
+
+        // Renderizar Slides (Instrucional)
+        function renderSlides(filter = 'todos', search = '') {
+            const container = document.getElementById('lista-slides');
+            let filtered = [...slides];
+
+            if (filter !== 'todos') {
+                filtered = filtered.filter(s => s.status === filter);
+            }
+
+            if (search) {
+                const s = search.toLowerCase();
+                filtered = filtered.filter(item =>
+                    item.disciplina?.toLowerCase().includes(s) ||
+                    item.curso?.toLowerCase().includes(s)
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📑</div>
+                        <p>Nenhum slide encontrado</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(s => `
+                <div class="item-card" data-id="${s.id}" data-type="slides">
+                    <div class="item-header">
+                        <span class="item-title">${s.disciplina || 'Sem nome'}</span>
+                        <span class="item-badge ${getBadgeClass(s.status)}">${getStatusLabel(s.status)}</span>
+                    </div>
+                    <div class="item-meta">
+                        <span>🎓 ${s.curso || '-'}</span>
+                        <span>👤 ${s.diagramador || '-'}</span>
+                        <span>📝 ${s.obs || 0} obs</span>
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', () => openEditModal(card.dataset.id, 'slides'));
             });
         }
 
@@ -1084,11 +1774,11 @@
                 <div class="item-card" data-id="${v.id}" data-type="videoaula">
                     <div class="item-header">
                         <span class="item-title">${v.disciplina || 'Sem nome'}</span>
-                        <span class="item-badge ${getBadgeClass(v.status)}">${v.status || 'pendente'}</span>
+                        <span class="item-badge ${getBadgeClass(v.status)}">${getStatusLabel(v.status)}</span>
                     </div>
                     <div class="item-meta">
                         <span>🎓 ${v.curso || '-'}</span>
-                        <span>👤 ${v.responsavel || '-'}</span>
+                        <span>👤 ${v.operador || '-'}</span>
                         <span>🎬 ${v.qtdVideos || 0} vídeos</span>
                     </div>
                 </div>
@@ -1099,6 +1789,59 @@
             });
         }
 
+        // Renderizar Kanban
+        function renderKanban() {
+            const allItems = [];
+
+            // Adicionar todos os itens com seu tipo
+            apostilas.forEach(a => allItems.push({ ...a, itemType: 'apostila' }));
+            slides.forEach(s => allItems.push({ ...s, itemType: 'slides' }));
+            videoaulas.forEach(v => allItems.push({ ...v, itemType: 'video' }));
+
+            // Filtrar por tipo se necessário
+            let filtered = allItems;
+            if (kanbanFilter !== 'todos') {
+                filtered = allItems.filter(i => i.itemType === kanbanFilter);
+            }
+
+            // Agrupar por status
+            const groups = {
+                iniciar: filtered.filter(i => i.status === 'iniciar' || !i.status),
+                producao: filtered.filter(i => ['producao', 'gravacao', 'edicao'].includes(i.status)),
+                revisao: filtered.filter(i => i.status === 'revisao'),
+                concluido: filtered.filter(i => i.status === 'concluido')
+            };
+
+            // Renderizar cada coluna
+            ['iniciar', 'producao', 'revisao', 'concluido'].forEach(status => {
+                const container = document.getElementById('kanban-' + status);
+                const countEl = document.getElementById('kanban-count-' + status);
+                const items = groups[status];
+
+                countEl.textContent = items.length;
+
+                if (items.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px; font-size: 0.8rem;">Nenhum item</p>';
+                } else {
+                    container.innerHTML = items.map(item => `
+                        <div class="kanban-card" data-id="${item.id}" data-type="${item.itemType}">
+                            <div class="kanban-card-title">${item.disciplina || 'Sem nome'}</div>
+                            <div class="kanban-card-meta">
+                                <span>🎓 ${item.curso || '-'}</span>
+                            </div>
+                            <span class="kanban-card-type type-${item.itemType}">
+                                ${item.itemType === 'apostila' ? '📚 Apostila' : item.itemType === 'slides' ? '📑 Slides' : '🎥 Vídeo'}
+                            </span>
+                        </div>
+                    `).join('');
+                }
+
+                container.querySelectorAll('.kanban-card').forEach(card => {
+                    card.addEventListener('click', () => openEditModal(card.dataset.id, card.dataset.type));
+                });
+            });
+        }
+
         // Renderizar Cursos
         function renderCursos(search = '') {
             const container = document.getElementById('lista-cursos');
@@ -1106,13 +1849,15 @@
             // Agrupar por curso
             const cursosAgrupados = {};
 
-            [...apostilas, ...videoaulas].forEach(item => {
+            [...apostilas, ...slides, ...videoaulas].forEach(item => {
                 if (!item.curso) return;
                 if (!cursosAgrupados[item.curso]) {
-                    cursosAgrupados[item.curso] = { apostilas: [], videoaulas: [] };
+                    cursosAgrupados[item.curso] = { apostilas: [], slides: [], videoaulas: [] };
                 }
                 if (item.qtdVideos !== undefined) {
                     cursosAgrupados[item.curso].videoaulas.push(item);
+                } else if (item.obs !== undefined) {
+                    cursosAgrupados[item.curso].slides.push(item);
                 } else {
                     cursosAgrupados[item.curso].apostilas.push(item);
                 }
@@ -1123,23 +1868,30 @@
                 if (search && !curso.toLowerCase().includes(search.toLowerCase())) return;
 
                 const data = cursosAgrupados[curso];
+                const total = data.apostilas.length + data.slides.length + data.videoaulas.length;
                 html += `
                     <div class="curso-card">
                         <div class="curso-header" data-curso="${curso}">
                             <h3>🎓 ${curso}</h3>
-                            <span class="curso-count">${data.apostilas.length} apostilas | ${data.videoaulas.length} vídeos</span>
+                            <span class="curso-count">${total} disciplinas</span>
                         </div>
-                        <div class="curso-disciplinas" id="disc-${curso.replace(/\s/g, '')}">
+                        <div class="curso-disciplinas" id="disc-${curso.replace(/[^a-zA-Z0-9]/g, '')}">
                             ${data.apostilas.map(a => `
                                 <div class="disciplina-item">
                                     <span>📚 ${a.disciplina}</span>
-                                    <span class="item-badge ${getBadgeClass(a.status)}">${a.status}</span>
+                                    <span class="item-badge ${getBadgeClass(a.status)}">${getStatusLabel(a.status)}</span>
+                                </div>
+                            `).join('')}
+                            ${data.slides.map(s => `
+                                <div class="disciplina-item">
+                                    <span>📑 ${s.disciplina}</span>
+                                    <span class="item-badge ${getBadgeClass(s.status)}">${getStatusLabel(s.status)}</span>
                                 </div>
                             `).join('')}
                             ${data.videoaulas.map(v => `
                                 <div class="disciplina-item">
                                     <span>🎥 ${v.disciplina}</span>
-                                    <span class="item-badge ${getBadgeClass(v.status)}">${v.status}</span>
+                                    <span class="item-badge ${getBadgeClass(v.status)}">${getStatusLabel(v.status)}</span>
                                 </div>
                             `).join('')}
                         </div>
@@ -1161,7 +1913,7 @@
             // Toggle expand
             container.querySelectorAll('.curso-header').forEach(header => {
                 header.addEventListener('click', () => {
-                    const curso = header.dataset.curso.replace(/\s/g, '');
+                    const curso = header.dataset.curso.replace(/[^a-zA-Z0-9]/g, '');
                     document.getElementById('disc-' + curso)?.classList.toggle('expanded');
                 });
             });
@@ -1169,7 +1921,7 @@
 
         // Renderizar Agenda
         function renderAgenda() {
-            const dias = ['Domingo', 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
+            const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
             const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
             document.getElementById('data-atual').textContent =
@@ -1202,18 +1954,52 @@
             });
         }
 
+        // Renderizar Metas
+        function renderMetas() {
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const mesAtual = meses[currentMetaMonth.getMonth()];
+            const anoAtual = currentMetaMonth.getFullYear();
+
+            document.getElementById('current-month').textContent = `${mesAtual} ${anoAtual}`;
+
+            // Por enquanto, usar valores placeholder
+            // Futuramente, puxar do Firebase baseado no mês
+            const metasDoMes = {
+                gravacoes: { meta: 120, atual: 45 },
+                edicoes: { meta: 120, atual: 38 },
+                apostilas: { meta: 12, atual: apostilas.filter(a => a.status === 'concluido').length },
+                slides: { meta: 80, atual: slides.filter(s => s.status === 'concluido').length }
+            };
+
+            // Atualizar cards
+            Object.keys(metasDoMes).forEach(tipo => {
+                const data = metasDoMes[tipo];
+                const pct = Math.min(100, Math.round((data.atual / data.meta) * 100));
+
+                document.getElementById(`meta-${tipo}-atual`).textContent = data.atual;
+                document.getElementById(`meta-${tipo}-meta`).textContent = data.meta;
+                document.getElementById(`meta-${tipo}-bar`).style.width = pct + '%';
+                document.getElementById(`meta-${tipo}-pct`).textContent = pct + '%';
+            });
+        }
+
         // Update Dashboard
         function updateDashboard() {
             document.getElementById('total-apostilas').textContent = apostilas.length;
             document.getElementById('total-videoaulas').textContent = videoaulas.length;
 
-            const concluidas = [...apostilas, ...videoaulas].filter(i => i.status === 'concluido').length;
+            const concluidas = apostilas.filter(i => i.status === 'concluido').length;
             document.getElementById('total-gravacoes').textContent = concluidas;
-            document.getElementById('total-slides').textContent = Math.floor(concluidas * 1.5);
+            document.getElementById('total-slides').textContent = slides.length;
 
             // Atualizar atividades recentes
-            const recentes = [...apostilas, ...videoaulas]
-                .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))
+            const recentes = [...apostilas, ...slides, ...videoaulas]
+                .sort((a, b) => {
+                    const timeA = a.updatedAt?.seconds || a.createdAt?.seconds || 0;
+                    const timeB = b.updatedAt?.seconds || b.createdAt?.seconds || 0;
+                    return timeB - timeA;
+                })
                 .slice(0, 5);
 
             const container = document.getElementById('atividades-recentes');
@@ -1229,58 +2015,83 @@
                     <div class="item-card">
                         <div class="item-header">
                             <span class="item-title">${r.disciplina}</span>
-                            <span class="item-badge ${getBadgeClass(r.status)}">${r.status}</span>
+                            <span class="item-badge ${getBadgeClass(r.status)}">${getStatusLabel(r.status)}</span>
                         </div>
                         <div class="item-meta">
-                            <span>${r.qtdVideos !== undefined ? '🎥' : '📚'} ${r.curso || '-'}</span>
+                            <span>${r.qtdVideos !== undefined ? '🎥' : r.obs !== undefined ? '📑' : '📚'} ${r.curso || '-'}</span>
                         </div>
                     </div>
                 `).join('');
             }
         }
 
-        // Salvar novo registro
-        async function salvarRegistro() {
-            const tipo = document.getElementById('add-tipo').value;
+        // Salvar nova disciplina (cria em apostilas, slides e videoaulas)
+        async function salvarDisciplina() {
             const disciplina = document.getElementById('add-disciplina').value.trim();
             const curso = document.getElementById('add-curso').value;
-            const responsavel = document.getElementById('add-responsavel').value;
-            const status = document.getElementById('add-status').value;
+            const ch = parseInt(document.getElementById('add-ch').value) || 0;
 
             if (!disciplina) {
                 showToast('Informe a disciplina', 'error');
                 return;
             }
 
-            const data = {
+            if (!curso) {
+                showToast('Selecione o curso', 'error');
+                return;
+            }
+
+            const baseData = {
                 disciplina,
                 curso,
-                responsavel,
-                status,
-                createdAt: Date.now(),
-                updatedAt: Date.now()
+                ch,
+                status: 'iniciar',
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
             };
 
             try {
-                if (tipo === 'apostila') {
-                    await addDoc(collection(db, 'apostilas'), data);
-                } else if (tipo === 'videoaula') {
-                    data.qtdVideos = 0;
-                    await addDoc(collection(db, 'videoaulas'), data);
-                } else if (tipo === 'agendamento') {
-                    data.data = currentDate.toISOString().split('T')[0];
-                    data.turno = 'manha';
-                    data.tipo = 'Gravacao';
-                    await addDoc(collection(db, 'agendamentos'), data);
-                }
+                // Criar apostila
+                await addDoc(collection(db, 'apostilas'), {
+                    ...baseData,
+                    diagramador: '',
+                    prazo: '',
+                    capitulos: 0,
+                    revisaoIA: false,
+                    codRev: '',
+                    registro: ''
+                });
 
-                showToast('Salvo com sucesso!', 'success');
+                // Criar instrucional (slides)
+                await addDoc(collection(db, 'instrucional'), {
+                    ...baseData,
+                    diagramador: '',
+                    relatorioG: false,
+                    roteiro: false,
+                    instrucional: false,
+                    obs: 0,
+                    quadro: 0,
+                    inLoco: 0
+                });
+
+                // Criar videoaula
+                await addDoc(collection(db, 'videoaulas'), {
+                    ...baseData,
+                    operador: '',
+                    editor: '',
+                    professor: '',
+                    prazo: '',
+                    qtdVideos: 0,
+                    minutagem: 0
+                });
+
+                showToast('Disciplina criada!', 'success');
                 document.getElementById('modal-add').classList.remove('active');
 
                 // Limpar form
                 document.getElementById('add-disciplina').value = '';
                 document.getElementById('add-curso').value = '';
-                document.getElementById('add-responsavel').value = '';
+                document.getElementById('add-ch').value = '';
             } catch (error) {
                 console.error(error);
                 showToast('Erro ao salvar', 'error');
@@ -1292,15 +2103,20 @@
             currentEditId = id;
             currentEditType = type;
 
-            const item = type === 'apostila'
-                ? apostilas.find(a => a.id === id)
-                : videoaulas.find(v => v.id === id);
+            let item;
+            if (type === 'apostila') {
+                item = apostilas.find(a => a.id === id);
+            } else if (type === 'slides') {
+                item = slides.find(s => s.id === id);
+            } else {
+                item = videoaulas.find(v => v.id === id);
+            }
 
             if (!item) return;
 
             document.getElementById('edit-disciplina').value = item.disciplina || '';
-            document.getElementById('edit-status').value = item.status || 'pendente';
-            document.getElementById('edit-responsavel').value = item.responsavel || '';
+            document.getElementById('edit-status').value = item.status || 'iniciar';
+            document.getElementById('edit-responsavel').value = item.diagramador || item.operador || '';
             document.getElementById('edit-obs').value = item.obs || '';
 
             document.getElementById('modal-edit').classList.add('active');
@@ -1315,13 +2131,25 @@
             const obs = document.getElementById('edit-obs').value;
 
             try {
-                const collectionName = currentEditType === 'apostila' ? 'apostilas' : 'videoaulas';
-                await updateDoc(doc(db, collectionName, currentEditId), {
+                let collectionName;
+                let updateData = {
                     status,
-                    responsavel,
                     obs,
-                    updatedAt: Date.now()
-                });
+                    updatedAt: serverTimestamp()
+                };
+
+                if (currentEditType === 'apostila') {
+                    collectionName = 'apostilas';
+                    updateData.diagramador = responsavel;
+                } else if (currentEditType === 'slides') {
+                    collectionName = 'instrucional';
+                    updateData.diagramador = responsavel;
+                } else {
+                    collectionName = 'videoaulas';
+                    updateData.operador = responsavel;
+                }
+
+                await updateDoc(doc(db, collectionName, currentEditId), updateData);
 
                 showToast('Atualizado!', 'success');
                 document.getElementById('modal-edit').classList.remove('active');
@@ -1338,7 +2166,15 @@
             if (!confirm('Tem certeza que deseja excluir?')) return;
 
             try {
-                const collectionName = currentEditType === 'apostila' ? 'apostilas' : 'videoaulas';
+                let collectionName;
+                if (currentEditType === 'apostila') {
+                    collectionName = 'apostilas';
+                } else if (currentEditType === 'slides') {
+                    collectionName = 'instrucional';
+                } else {
+                    collectionName = 'videoaulas';
+                }
+
                 await deleteDoc(doc(db, collectionName, currentEditId));
 
                 showToast('Excluído!', 'success');
@@ -1349,13 +2185,63 @@
             }
         }
 
+        // Salvar score diário
+        async function salvarScore() {
+            const data = document.getElementById('score-data').value;
+            const gravacoes = parseInt(document.getElementById('score-gravacoes').value) || 0;
+            const edicoes = parseInt(document.getElementById('score-edicoes').value) || 0;
+            const apostilasScore = parseInt(document.getElementById('score-apostilas').value) || 0;
+            const slidesScore = parseInt(document.getElementById('score-slides').value) || 0;
+
+            if (!data) {
+                showToast('Selecione a data', 'error');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'scores'), {
+                    data,
+                    gravacoes,
+                    edicoes,
+                    apostilas: apostilasScore,
+                    slides: slidesScore,
+                    createdAt: serverTimestamp()
+                });
+
+                showToast('Score registrado!', 'success');
+                document.getElementById('modal-score').classList.remove('active');
+
+                // Limpar form
+                document.getElementById('score-gravacoes').value = '0';
+                document.getElementById('score-edicoes').value = '0';
+                document.getElementById('score-apostilas').value = '0';
+                document.getElementById('score-slides').value = '0';
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao salvar', 'error');
+            }
+        }
+
         // Helpers
         function getBadgeClass(status) {
             switch(status) {
                 case 'concluido': return 'badge-success';
                 case 'revisao': return 'badge-warning';
                 case 'producao': case 'gravacao': case 'edicao': return 'badge-info';
-                default: return 'badge-danger';
+                case 'iniciar': return 'badge-cyan';
+                default: return 'badge-cyan';
+            }
+        }
+
+        function getStatusLabel(status) {
+            switch(status) {
+                case 'concluido': return 'Concluído';
+                case 'revisao': return 'Revisão';
+                case 'producao': return 'Produção';
+                case 'gravacao': return 'Gravação';
+                case 'edicao': return 'Edição';
+                case 'iniciar': return 'Iniciar';
+                default: return 'Iniciar';
             }
         }
 
