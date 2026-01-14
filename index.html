@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Controle Estudio CEDTEC</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-card-hover: #1e2a4a;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 4px;
+        }
+
+        /* Tabs de Navegacao */
+        .tabs {
+            display: flex;
+            background: var(--bg-card);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .tab-icon {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* Container Principal */
+        .container {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Paginas */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Cards de Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card.large {
+            grid-column: span 2;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Progress Ring */
+        .progress-ring {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 12px;
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .progress-ring .bg {
+            stroke: rgba(255,255,255,0.1);
+        }
+
+        .progress-ring .progress {
+            stroke: var(--primary);
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Lista de Items */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .item-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .item-badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success { background: rgba(34,197,94,0.2); color: var(--success); }
+        .badge-warning { background: rgba(245,158,11,0.2); color: var(--warning); }
+        .badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
+        .badge-info { background: rgba(59,130,246,0.2); color: var(--info); }
+
+        .item-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .item-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* FAB - Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+            transition: all 0.2s;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: 20px 20px 0 0;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+
+        /* Section Title */
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Curso Expandivel */
+        .curso-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .curso-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .curso-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .curso-count {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .curso-disciplinas {
+            display: none;
+            background: rgba(0,0,0,0.2);
+            padding: 8px;
+        }
+
+        .curso-disciplinas.expanded {
+            display: block;
+        }
+
+        .disciplina-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            background: var(--bg-dark);
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Agenda */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .calendar-nav button {
+            background: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .calendar-current {
+            font-weight: 600;
+        }
+
+        .agenda-turno {
+            margin-bottom: 20px;
+        }
+
+        .turno-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .agenda-slot {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .agenda-slot.vazio {
+            border-left-color: rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .slot-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .slot-content {
+            font-weight: 500;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>
+            <span>🎬</span>
+            Controle do Estúdio
+        </h1>
+        <p class="header-subtitle">CEDTEC - Produção de Material Didático</p>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+        <div class="tab active" data-page="dashboard">
+            <span class="tab-icon">📊</span>
+            Dashboard
+        </div>
+        <div class="tab" data-page="apostilas">
+            <span class="tab-icon">📚</span>
+            Apostilas
+        </div>
+        <div class="tab" data-page="videoaulas">
+            <span class="tab-icon">🎥</span>
+            Vídeos
+        </div>
+        <div class="tab" data-page="cursos">
+            <span class="tab-icon">🎓</span>
+            Cursos
+        </div>
+        <div class="tab" data-page="agenda">
+            <span class="tab-icon">📅</span>
+            Agenda
+        </div>
+    </nav>
+
+    <!-- Pages -->
+    <main class="container">
+        <!-- Dashboard -->
+        <div id="page-dashboard" class="page active">
+            <div class="stats-grid">
+                <div class="stat-card large">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                        <circle class="bg" cx="60" cy="60" r="52"/>
+                        <circle class="progress" cx="60" cy="60" r="52"
+                            stroke-dasharray="327" stroke-dashoffset="98" id="progress-circle"/>
+                    </svg>
+                    <div class="stat-value" id="meta-horas">14h / 20h</div>
+                    <div class="stat-label">Meta Mensal de Produção</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-gravacoes">0</div>
+                    <div class="stat-label">🎬 Gravações</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-videoaulas">0</div>
+                    <div class="stat-label">🎥 Videoaulas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-apostilas">0</div>
+                    <div class="stat-label">📚 Apostilas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-slides">0</div>
+                    <div class="stat-label">📑 Slides</div>
+                </div>
+            </div>
+
+            <h3 class="section-title">Atividades Recentes</h3>
+            <div id="atividades-recentes" class="item-list">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>Nenhuma atividade recente</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apostilas -->
+        <div id="page-apostilas" class="page">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar apostila..." id="search-apostilas">
+            </div>
+            <div class="filters" id="filtros-apostilas">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="producao">Em Produção</button>
+                <button class="filter-btn" data-filter="revisao">Revisão</button>
+                <button class="filter-btn" data-filter="concluido">Concluído</button>
+            </div>
+            <div id="lista-apostilas" class="item-list">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Videoaulas -->
+        <div id="page-videoaulas" class="page">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar videoaula..." id="search-videoaulas">
+            </div>
+            <div class="filters" id="filtros-videoaulas">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="gravacao">Gravação</button>
+                <button class="filter-btn" data-filter="edicao">Edição</button>
+                <button class="filter-btn" data-filter="concluido">Concluído</button>
+            </div>
+            <div id="lista-videoaulas" class="item-list">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Cursos -->
+        <div id="page-cursos" class="page">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar curso..." id="search-cursos">
+            </div>
+            <div id="lista-cursos">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Agenda -->
+        <div id="page-agenda" class="page">
+            <div class="calendar-nav">
+                <button id="btn-prev-day">← Anterior</button>
+                <span class="calendar-current" id="data-atual">Segunda, 13 Jan</span>
+                <button id="btn-next-day">Próximo →</button>
+            </div>
+
+            <div class="agenda-turno">
+                <div class="turno-title">☀️ MANHÃ (8h - 12h)</div>
+                <div id="slots-manha"></div>
+            </div>
+
+            <div class="agenda-turno">
+                <div class="turno-title">🌤️ TARDE (13h - 17h)</div>
+                <div id="slots-tarde"></div>
+            </div>
+
+            <div class="agenda-turno">
+                <div class="turno-title">🌙 NOITE (18h - 22h)</div>
+                <div id="slots-noite"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FAB -->
+    <button class="fab" id="fab-add">+</button>
+
+    <!-- Modal Adicionar -->
+    <div class="modal-overlay" id="modal-add">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Novo Registro</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tipo</label>
+                <select class="form-select" id="add-tipo">
+                    <option value="apostila">Apostila</option>
+                    <option value="videoaula">Videoaula</option>
+                    <option value="agendamento">Agendamento</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Disciplina</label>
+                <input type="text" class="form-input" id="add-disciplina" placeholder="Nome da disciplina">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Curso</label>
+                <select class="form-select" id="add-curso">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="grupo-responsavel">
+                <label class="form-label">Responsável</label>
+                <select class="form-select" id="add-responsavel">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="add-status">
+                    <option value="pendente">Pendente</option>
+                    <option value="producao">Em Produção</option>
+                    <option value="revisao">Revisão</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" id="btn-salvar">Salvar</button>
+        </div>
+    </div>
+
+    <!-- Modal Editar -->
+    <div class="modal-overlay" id="modal-edit">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Editar Registro</h2>
+                <button class="modal-close" id="modal-edit-close">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Disciplina</label>
+                <input type="text" class="form-input" id="edit-disciplina" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="edit-status">
+                    <option value="pendente">Pendente</option>
+                    <option value="producao">Em Produção</option>
+                    <option value="revisao">Revisão</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Responsável</label>
+                <select class="form-select" id="edit-responsavel">
+                    <option value="">Selecione...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Observações</label>
+                <input type="text" class="form-input" id="edit-obs" placeholder="Observações">
+            </div>
+
+            <button class="btn btn-primary" id="btn-atualizar" style="margin-bottom: 12px;">Atualizar</button>
+            <button class="btn btn-danger" id="btn-excluir">Excluir</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9XZmjgQZakDTEFGQS3v4bQ6LjKfsTmso",
+            authDomain: "controle-estudio-cedtec.firebaseapp.com",
+            projectId: "controle-estudio-cedtec",
+            storageBucket: "controle-estudio-cedtec.firebasestorage.app",
+            messagingSenderId: "883985328650",
+            appId: "1:883985328650:web:9d64ae88dc090a54b4cdf3",
+            measurementId: "G-RHMC2HZNY2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Estado da Aplicacao
+        let apostilas = [];
+        let videoaulas = [];
+        let cursos = [];
+        let agendamentos = [];
+        let currentEditId = null;
+        let currentEditType = null;
+        let currentDate = new Date();
+
+        // Dados de referencia
+        const cursosRef = [
+            'Enfermagem', 'Radiologia', 'Seguranca do Trabalho', 'Informatica',
+            'Administracao', 'Contabilidade', 'Logistica', 'RH', 'Marketing',
+            'Design Grafico', 'Desenvolvimento Web', 'Eletrotecnica', 'Mecanica',
+            'Quimica', 'Meio Ambiente', 'Edificacoes', 'Agrimensura', 'Agroindustria',
+            'Mineracao', 'Petroleo e Gas', 'Automacao', 'Eletroeletronica',
+            'Refrigeracao', 'Metalurgia'
+        ];
+
+        const responsaveis = {
+            editores: ['Erick', 'Isabela', 'Lara', 'Leticia', 'Magna', 'Mateus', 'Diego', 'Deiv', 'Kathleen'],
+            diagramadores: ['Erick', 'Kathleen', 'Joao'],
+            professores: ['Marcelo', 'Fabricio', 'Joana', 'Renan', 'Rodrigo', 'Priscila', 'Nara', 'Nane', 'Edson', 'Felipe', 'Sergio', 'Helon']
+        };
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            initTabs();
+            initModals();
+            initFilters();
+            initAgenda();
+            populateSelects();
+            loadData();
+        });
+
+        // Navegacao por Tabs
+        function initTabs() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById('page-' + tab.dataset.page).classList.add('active');
+                });
+            });
+        }
+
+        // Modais
+        function initModals() {
+            document.getElementById('fab-add').addEventListener('click', () => {
+                document.getElementById('modal-add').classList.add('active');
+            });
+
+            document.getElementById('modal-close').addEventListener('click', () => {
+                document.getElementById('modal-add').classList.remove('active');
+            });
+
+            document.getElementById('modal-edit-close').addEventListener('click', () => {
+                document.getElementById('modal-edit').classList.remove('active');
+            });
+
+            document.getElementById('btn-salvar').addEventListener('click', salvarRegistro);
+            document.getElementById('btn-atualizar').addEventListener('click', atualizarRegistro);
+            document.getElementById('btn-excluir').addEventListener('click', excluirRegistro);
+
+            // Fechar modal ao clicar fora
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('active');
+                });
+            });
+        }
+
+        // Filtros
+        function initFilters() {
+            document.querySelectorAll('.filters').forEach(filterContainer => {
+                filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        if (filterContainer.id === 'filtros-apostilas') {
+                            renderApostilas(btn.dataset.filter);
+                        } else if (filterContainer.id === 'filtros-videoaulas') {
+                            renderVideoaulas(btn.dataset.filter);
+                        }
+                    });
+                });
+            });
+
+            // Busca
+            document.getElementById('search-apostilas').addEventListener('input', (e) => {
+                renderApostilas('todos', e.target.value);
+            });
+
+            document.getElementById('search-videoaulas').addEventListener('input', (e) => {
+                renderVideoaulas('todos', e.target.value);
+            });
+
+            document.getElementById('search-cursos').addEventListener('input', (e) => {
+                renderCursos(e.target.value);
+            });
+        }
+
+        // Agenda
+        function initAgenda() {
+            document.getElementById('btn-prev-day').addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 1);
+                renderAgenda();
+            });
+
+            document.getElementById('btn-next-day').addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 1);
+                renderAgenda();
+            });
+
+            renderAgenda();
+        }
+
+        // Popular Selects
+        function populateSelects() {
+            const selectCurso = document.getElementById('add-curso');
+            cursosRef.forEach(curso => {
+                const opt = document.createElement('option');
+                opt.value = curso;
+                opt.textContent = curso;
+                selectCurso.appendChild(opt);
+            });
+
+            const selectResp = document.getElementById('add-responsavel');
+            const editResp = document.getElementById('edit-responsavel');
+            [...responsaveis.editores, ...responsaveis.diagramadores].forEach(resp => {
+                const opt = document.createElement('option');
+                opt.value = resp;
+                opt.textContent = resp;
+                selectResp.appendChild(opt.cloneNode(true));
+                editResp.appendChild(opt);
+            });
+        }
+
+        // Carregar dados do Firebase
+        async function loadData() {
+            // Listener para apostilas
+            const qApostilas = query(collection(db, 'apostilas'), orderBy('createdAt', 'desc'));
+            onSnapshot(qApostilas, (snapshot) => {
+                apostilas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderApostilas();
+                updateDashboard();
+            });
+
+            // Listener para videoaulas
+            const qVideoaulas = query(collection(db, 'videoaulas'), orderBy('createdAt', 'desc'));
+            onSnapshot(qVideoaulas, (snapshot) => {
+                videoaulas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderVideoaulas();
+                updateDashboard();
+            });
+
+            // Listener para cursos
+            const qCursos = query(collection(db, 'cursos'));
+            onSnapshot(qCursos, (snapshot) => {
+                cursos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderCursos();
+            });
+
+            // Listener para agendamentos
+            const qAgendamentos = query(collection(db, 'agendamentos'));
+            onSnapshot(qAgendamentos, (snapshot) => {
+                agendamentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderAgenda();
+            });
+        }
+
+        // Renderizar Apostilas
+        function renderApostilas(filter = 'todos', search = '') {
+            const container = document.getElementById('lista-apostilas');
+            let filtered = [...apostilas];
+
+            if (filter !== 'todos') {
+                filtered = filtered.filter(a => a.status === filter);
+            }
+
+            if (search) {
+                const s = search.toLowerCase();
+                filtered = filtered.filter(a =>
+                    a.disciplina?.toLowerCase().includes(s) ||
+                    a.curso?.toLowerCase().includes(s)
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📚</div>
+                        <p>Nenhuma apostila encontrada</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(a => `
+                <div class="item-card" data-id="${a.id}" data-type="apostila">
+                    <div class="item-header">
+                        <span class="item-title">${a.disciplina || 'Sem nome'}</span>
+                        <span class="item-badge ${getBadgeClass(a.status)}">${a.status || 'pendente'}</span>
+                    </div>
+                    <div class="item-meta">
+                        <span>🎓 ${a.curso || '-'}</span>
+                        <span>👤 ${a.responsavel || '-'}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Eventos de clique
+            container.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', () => openEditModal(card.dataset.id, 'apostila'));
+            });
+        }
+
+        // Renderizar Videoaulas
+        function renderVideoaulas(filter = 'todos', search = '') {
+            const container = document.getElementById('lista-videoaulas');
+            let filtered = [...videoaulas];
+
+            if (filter !== 'todos') {
+                filtered = filtered.filter(v => v.status === filter);
+            }
+
+            if (search) {
+                const s = search.toLowerCase();
+                filtered = filtered.filter(v =>
+                    v.disciplina?.toLowerCase().includes(s) ||
+                    v.curso?.toLowerCase().includes(s)
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎥</div>
+                        <p>Nenhuma videoaula encontrada</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(v => `
+                <div class="item-card" data-id="${v.id}" data-type="videoaula">
+                    <div class="item-header">
+                        <span class="item-title">${v.disciplina || 'Sem nome'}</span>
+                        <span class="item-badge ${getBadgeClass(v.status)}">${v.status || 'pendente'}</span>
+                    </div>
+                    <div class="item-meta">
+                        <span>🎓 ${v.curso || '-'}</span>
+                        <span>👤 ${v.responsavel || '-'}</span>
+                        <span>🎬 ${v.qtdVideos || 0} vídeos</span>
+                    </div>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', () => openEditModal(card.dataset.id, 'videoaula'));
+            });
+        }
+
+        // Renderizar Cursos
+        function renderCursos(search = '') {
+            const container = document.getElementById('lista-cursos');
+
+            // Agrupar por curso
+            const cursosAgrupados = {};
+
+            [...apostilas, ...videoaulas].forEach(item => {
+                if (!item.curso) return;
+                if (!cursosAgrupados[item.curso]) {
+                    cursosAgrupados[item.curso] = { apostilas: [], videoaulas: [] };
+                }
+                if (item.qtdVideos !== undefined) {
+                    cursosAgrupados[item.curso].videoaulas.push(item);
+                } else {
+                    cursosAgrupados[item.curso].apostilas.push(item);
+                }
+            });
+
+            let html = '';
+            Object.keys(cursosAgrupados).sort().forEach(curso => {
+                if (search && !curso.toLowerCase().includes(search.toLowerCase())) return;
+
+                const data = cursosAgrupados[curso];
+                html += `
+                    <div class="curso-card">
+                        <div class="curso-header" data-curso="${curso}">
+                            <h3>🎓 ${curso}</h3>
+                            <span class="curso-count">${data.apostilas.length} apostilas | ${data.videoaulas.length} vídeos</span>
+                        </div>
+                        <div class="curso-disciplinas" id="disc-${curso.replace(/\s/g, '')}">
+                            ${data.apostilas.map(a => `
+                                <div class="disciplina-item">
+                                    <span>📚 ${a.disciplina}</span>
+                                    <span class="item-badge ${getBadgeClass(a.status)}">${a.status}</span>
+                                </div>
+                            `).join('')}
+                            ${data.videoaulas.map(v => `
+                                <div class="disciplina-item">
+                                    <span>🎥 ${v.disciplina}</span>
+                                    <span class="item-badge ${getBadgeClass(v.status)}">${v.status}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (!html) {
+                html = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎓</div>
+                        <p>Nenhum curso encontrado</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            // Toggle expand
+            container.querySelectorAll('.curso-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const curso = header.dataset.curso.replace(/\s/g, '');
+                    document.getElementById('disc-' + curso)?.classList.toggle('expanded');
+                });
+            });
+        }
+
+        // Renderizar Agenda
+        function renderAgenda() {
+            const dias = ['Domingo', 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
+            const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+            document.getElementById('data-atual').textContent =
+                `${dias[currentDate.getDay()]}, ${currentDate.getDate()} ${meses[currentDate.getMonth()]}`;
+
+            const dateStr = currentDate.toISOString().split('T')[0];
+            const agendaDia = agendamentos.filter(a => a.data === dateStr);
+
+            const turnos = {
+                manha: agendaDia.filter(a => a.turno === 'manha'),
+                tarde: agendaDia.filter(a => a.turno === 'tarde'),
+                noite: agendaDia.filter(a => a.turno === 'noite')
+            };
+
+            ['manha', 'tarde', 'noite'].forEach(turno => {
+                const container = document.getElementById('slots-' + turno);
+                if (turnos[turno].length === 0) {
+                    container.innerHTML = `<div class="agenda-slot vazio">Nenhum agendamento</div>`;
+                } else {
+                    container.innerHTML = turnos[turno].map(a => `
+                        <div class="agenda-slot">
+                            <div class="slot-time">${a.horario || ''}</div>
+                            <div class="slot-content">${a.tipo || ''} - ${a.professor || ''}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                                ${a.disciplina || ''}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            });
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            document.getElementById('total-apostilas').textContent = apostilas.length;
+            document.getElementById('total-videoaulas').textContent = videoaulas.length;
+
+            const concluidas = [...apostilas, ...videoaulas].filter(i => i.status === 'concluido').length;
+            document.getElementById('total-gravacoes').textContent = concluidas;
+            document.getElementById('total-slides').textContent = Math.floor(concluidas * 1.5);
+
+            // Atualizar atividades recentes
+            const recentes = [...apostilas, ...videoaulas]
+                .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))
+                .slice(0, 5);
+
+            const container = document.getElementById('atividades-recentes');
+            if (recentes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>Nenhuma atividade recente</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = recentes.map(r => `
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">${r.disciplina}</span>
+                            <span class="item-badge ${getBadgeClass(r.status)}">${r.status}</span>
+                        </div>
+                        <div class="item-meta">
+                            <span>${r.qtdVideos !== undefined ? '🎥' : '📚'} ${r.curso || '-'}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Salvar novo registro
+        async function salvarRegistro() {
+            const tipo = document.getElementById('add-tipo').value;
+            const disciplina = document.getElementById('add-disciplina').value.trim();
+            const curso = document.getElementById('add-curso').value;
+            const responsavel = document.getElementById('add-responsavel').value;
+            const status = document.getElementById('add-status').value;
+
+            if (!disciplina) {
+                showToast('Informe a disciplina', 'error');
+                return;
+            }
+
+            const data = {
+                disciplina,
+                curso,
+                responsavel,
+                status,
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+            };
+
+            try {
+                if (tipo === 'apostila') {
+                    await addDoc(collection(db, 'apostilas'), data);
+                } else if (tipo === 'videoaula') {
+                    data.qtdVideos = 0;
+                    await addDoc(collection(db, 'videoaulas'), data);
+                } else if (tipo === 'agendamento') {
+                    data.data = currentDate.toISOString().split('T')[0];
+                    data.turno = 'manha';
+                    data.tipo = 'Gravacao';
+                    await addDoc(collection(db, 'agendamentos'), data);
+                }
+
+                showToast('Salvo com sucesso!', 'success');
+                document.getElementById('modal-add').classList.remove('active');
+
+                // Limpar form
+                document.getElementById('add-disciplina').value = '';
+                document.getElementById('add-curso').value = '';
+                document.getElementById('add-responsavel').value = '';
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao salvar', 'error');
+            }
+        }
+
+        // Abrir modal de edicao
+        function openEditModal(id, type) {
+            currentEditId = id;
+            currentEditType = type;
+
+            const item = type === 'apostila'
+                ? apostilas.find(a => a.id === id)
+                : videoaulas.find(v => v.id === id);
+
+            if (!item) return;
+
+            document.getElementById('edit-disciplina').value = item.disciplina || '';
+            document.getElementById('edit-status').value = item.status || 'pendente';
+            document.getElementById('edit-responsavel').value = item.responsavel || '';
+            document.getElementById('edit-obs').value = item.obs || '';
+
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        // Atualizar registro
+        async function atualizarRegistro() {
+            if (!currentEditId || !currentEditType) return;
+
+            const status = document.getElementById('edit-status').value;
+            const responsavel = document.getElementById('edit-responsavel').value;
+            const obs = document.getElementById('edit-obs').value;
+
+            try {
+                const collectionName = currentEditType === 'apostila' ? 'apostilas' : 'videoaulas';
+                await updateDoc(doc(db, collectionName, currentEditId), {
+                    status,
+                    responsavel,
+                    obs,
+                    updatedAt: Date.now()
+                });
+
+                showToast('Atualizado!', 'success');
+                document.getElementById('modal-edit').classList.remove('active');
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao atualizar', 'error');
+            }
+        }
+
+        // Excluir registro
+        async function excluirRegistro() {
+            if (!currentEditId || !currentEditType) return;
+
+            if (!confirm('Tem certeza que deseja excluir?')) return;
+
+            try {
+                const collectionName = currentEditType === 'apostila' ? 'apostilas' : 'videoaulas';
+                await deleteDoc(doc(db, collectionName, currentEditId));
+
+                showToast('Excluído!', 'success');
+                document.getElementById('modal-edit').classList.remove('active');
+            } catch (error) {
+                console.error(error);
+                showToast('Erro ao excluir', 'error');
+            }
+        }
+
+        // Helpers
+        function getBadgeClass(status) {
+            switch(status) {
+                case 'concluido': return 'badge-success';
+                case 'revisao': return 'badge-warning';
+                case 'producao': case 'gravacao': case 'edicao': return 'badge-info';
+                default: return 'badge-danger';
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
