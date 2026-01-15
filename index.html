@@ -1168,17 +1168,368 @@
             color: var(--text-secondary);
             white-space: nowrap;
         }
+
+        /* ========== TELA DE LOGIN ========== */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0f0f23 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-screen.hidden {
+            display: none;
+        }
+
+        .login-container {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .login-logo {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 24px;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-google:hover {
+            background: #f1f1f1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-google svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .login-error {
+            background: rgba(239,68,68,0.2);
+            color: var(--danger);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+
+        .login-loading {
+            display: none;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
+        .login-loading.visible {
+            display: block;
+        }
+
+        .login-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* User Info no Header */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .user-name {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-role {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .role-admin { background: rgba(239,68,68,0.3); }
+        .role-editor { background: rgba(59,130,246,0.3); }
+        .role-viewer { background: rgba(34,197,94,0.3); }
+
+        /* Botão Logout no Sidebar */
+        .sidebar-user {
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .sidebar-user-details {
+            flex: 1;
+        }
+
+        .sidebar-user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-user-email {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: rgba(239,68,68,0.2);
+            color: var(--danger);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239,68,68,0.3);
+        }
+
+        /* Esconder elementos para viewers */
+        .hide-for-viewer {
+            display: none !important;
+        }
+
+        /* Alerta de permissão */
+        .permission-alert {
+            background: rgba(245,158,11,0.2);
+            color: var(--warning);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Página Admin */
+        .admin-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .admin-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .user-item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-item-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .user-item-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .user-item-email {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .user-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .role-select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+        }
+
+        .btn-remove-user {
+            padding: 6px 10px;
+            background: rgba(239,68,68,0.2);
+            color: var(--danger);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .add-user-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .add-user-form input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+        }
+
+        .add-user-form button {
+            padding: 10px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
+    <!-- TELA DE LOGIN -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-container">
+            <div class="login-logo">🎬</div>
+            <h1 class="login-title">Controle do Estúdio</h1>
+            <p class="login-subtitle">CEDTEC - Produção de Material Didático</p>
+
+            <button class="btn-google" id="btn-google-login">
+                <svg viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Entrar com Google
+            </button>
+
+            <div class="login-loading" id="login-loading">
+                <div class="login-spinner"></div>
+                <p>Verificando acesso...</p>
+            </div>
+
+            <div class="login-error" id="login-error">
+                <strong>Acesso negado!</strong><br>
+                <span id="login-error-msg">Seu email não está autorizado. Entre em contato com o administrador.</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="main-header" style="display: none;">
         <div class="header-left">
             <h1>
                 <span>🎬</span>
                 Controle do Estúdio
             </h1>
             <p class="header-subtitle">CEDTEC - Produção de Material Didático</p>
+        </div>
+        <div class="user-info" id="header-user-info">
+            <img src="" alt="" class="user-avatar" id="header-avatar">
+            <span class="user-role" id="header-role"></span>
         </div>
         <button class="menu-btn" id="menu-btn">☰</button>
     </header>
@@ -1190,10 +1541,24 @@
                 <h2>Menu</h2>
                 <button class="sidebar-close" id="sidebar-close">×</button>
             </div>
+
+            <!-- User Info no Sidebar -->
+            <div class="sidebar-user" id="sidebar-user">
+                <div class="sidebar-user-info">
+                    <img src="" alt="" class="sidebar-user-avatar" id="sidebar-avatar">
+                    <div class="sidebar-user-details">
+                        <div class="sidebar-user-name" id="sidebar-user-name">Usuário</div>
+                        <div class="sidebar-user-email" id="sidebar-user-email">email@exemplo.com</div>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btn-logout">🚪 Sair da Conta</button>
+            </div>
+
             <ul class="sidebar-menu">
                 <li><a href="#" data-page="agenda">📅 Agenda</a></li>
                 <li><a href="#" data-page="kanban">📋 Kanban</a></li>
                 <li><a href="#" data-page="config">⚙️ Configurações</a></li>
+                <li id="menu-admin" style="display:none;"><a href="#" data-page="admin">👑 Administração</a></li>
             </ul>
         </div>
     </div>
@@ -1520,7 +1885,7 @@
             <div class="item-list">
                 <div class="item-card">
                     <div class="item-title">👤 Perfil do Usuário</div>
-                    <div class="item-meta"><span>Em breve: login e sincronização</span></div>
+                    <div class="item-meta"><span>Logado como <span id="config-user-email">-</span></span></div>
                 </div>
                 <div class="item-card">
                     <div class="item-title">🔔 Notificações</div>
@@ -1533,6 +1898,52 @@
                 <div class="item-card">
                     <div class="item-title">📊 Exportar Dados</div>
                     <div class="item-meta"><span>Gerar relatório em PDF</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin (só visível para admins) -->
+        <div id="page-admin" class="page">
+            <h3 class="section-title">👑 Administração</h3>
+
+            <div class="admin-section">
+                <div class="admin-section-title">👥 Usuários Autorizados</div>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+                    Apenas emails listados aqui podem acessar o sistema.
+                </p>
+                <div class="user-list" id="admin-user-list">
+                    <!-- Preenchido via JS -->
+                </div>
+                <div class="add-user-form">
+                    <input type="email" id="new-user-email" placeholder="email@exemplo.com">
+                    <select id="new-user-role">
+                        <option value="viewer">Visualizador</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button id="btn-add-user">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <div class="admin-section-title">📊 Estatísticas do Sistema</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="admin-total-apostilas">0</div>
+                        <div class="stat-label">Apostilas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="admin-total-videos">0</div>
+                        <div class="stat-label">Videoaulas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="admin-total-users">0</div>
+                        <div class="stat-label">Usuários</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="admin-total-cursos">0</div>
+                        <div class="stat-label">Cursos</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1927,6 +2338,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
         import { getFirestore, collection, doc, getDocs, getDoc, setDoc, addDoc, updateDoc, deleteDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
         // Firebase Config
         const firebaseConfig = {
@@ -1941,6 +2353,8 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
 
         // Estado da Aplicacao
         let apostilas = [];
@@ -1957,12 +2371,18 @@
         let kanbanFilter = 'todos';
         let homeViewMode = 'mes'; // 'mes' ou 'ano'
         let scores = []; // Array de scores diários
+        let authorizedUsers = []; // Lista de usuários autorizados
+
+        // Estado do usuário logado
+        let currentUser = null;
+        let userRole = null; // 'admin', 'editor', 'viewer'
 
         // Dados de referencia
         const cursosRef = [
             'MIN - Mineração', 'EJA - Supletivo EAD', 'QUA - Qualificação', 'QUI - Química',
             'MET - Metalurgia', 'INS - Instrumentação', 'DPA - Disc. Padrão', 'MEC - Mecânica',
-            'SEG - Seg. do Trabalho', 'CNV - Construção Naval', 'ADM - Administração'
+            'SEG - Seg. do Trabalho', 'CNV - Construção Naval', 'ADM - Administração',
+            'Administração', 'Análises Clínicas', 'Automação Industrial'
         ];
 
         const responsaveis = {
@@ -1971,8 +2391,268 @@
             operadores: ['Diego', 'Erick']
         };
 
+        // ========== SISTEMA DE AUTENTICAÇÃO ==========
+
+        // Verificar estado de autenticação ao carregar
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Usuário logado, verificar se está autorizado
+                const isAuthorized = await checkUserAuthorization(user.email);
+                if (isAuthorized) {
+                    currentUser = user;
+                    showApp();
+                    loadData();
+                } else {
+                    // Não autorizado
+                    showLoginError('Seu email não está autorizado a acessar o sistema. Entre em contato com o administrador.');
+                    await signOut(auth);
+                }
+            } else {
+                // Não logado, mostrar tela de login
+                showLoginScreen();
+            }
+        });
+
+        // Verificar se email está na whitelist
+        async function checkUserAuthorization(email) {
+            try {
+                const userDoc = await getDoc(doc(db, 'usuarios', email));
+                if (userDoc.exists()) {
+                    userRole = userDoc.data().role || 'viewer';
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Erro ao verificar autorização:', error);
+                return false;
+            }
+        }
+
+        // Mostrar tela de login
+        function showLoginScreen() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('main-header').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'none';
+            document.querySelector('.container').style.display = 'none';
+            document.querySelector('.fab').style.display = 'none';
+            document.getElementById('login-loading').classList.remove('visible');
+            document.getElementById('login-error').classList.remove('visible');
+        }
+
+        // Mostrar erro no login
+        function showLoginError(msg) {
+            document.getElementById('login-loading').classList.remove('visible');
+            document.getElementById('login-error-msg').textContent = msg;
+            document.getElementById('login-error').classList.add('visible');
+        }
+
+        // Mostrar app após login
+        function showApp() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-header').style.display = 'flex';
+            document.querySelector('.bottom-nav').style.display = 'flex';
+            document.querySelector('.container').style.display = 'block';
+            document.querySelector('.fab').style.display = 'flex';
+
+            // Atualizar UI com dados do usuário
+            updateUserUI();
+            applyRoleRestrictions();
+        }
+
+        // Atualizar UI com dados do usuário
+        function updateUserUI() {
+            if (!currentUser) return;
+
+            // Header
+            document.getElementById('header-avatar').src = currentUser.photoURL || 'https://via.placeholder.com/32';
+            document.getElementById('header-role').textContent = getRoleLabel(userRole);
+            document.getElementById('header-role').className = 'user-role role-' + userRole;
+
+            // Sidebar
+            document.getElementById('sidebar-avatar').src = currentUser.photoURL || 'https://via.placeholder.com/48';
+            document.getElementById('sidebar-user-name').textContent = currentUser.displayName || 'Usuário';
+            document.getElementById('sidebar-user-email').textContent = currentUser.email;
+
+            // Config
+            document.getElementById('config-user-email').textContent = currentUser.email;
+
+            // Menu Admin (só para admins)
+            if (userRole === 'admin') {
+                document.getElementById('menu-admin').style.display = 'block';
+            }
+        }
+
+        // Aplicar restrições baseadas no role
+        function applyRoleRestrictions() {
+            const fab = document.querySelector('.fab');
+            const deleteButtons = document.querySelectorAll('.btn-danger');
+
+            if (userRole === 'viewer') {
+                // Viewers não podem criar nem deletar
+                fab.style.display = 'none';
+                deleteButtons.forEach(btn => btn.style.display = 'none');
+            } else if (userRole === 'editor') {
+                // Editors podem criar mas não deletar
+                fab.style.display = 'flex';
+                deleteButtons.forEach(btn => btn.style.display = 'none');
+            } else if (userRole === 'admin') {
+                // Admins podem tudo
+                fab.style.display = 'flex';
+                deleteButtons.forEach(btn => btn.style.display = 'block');
+            }
+        }
+
+        // Label do role
+        function getRoleLabel(role) {
+            switch(role) {
+                case 'admin': return 'Admin';
+                case 'editor': return 'Editor';
+                case 'viewer': return 'Visualizador';
+                default: return 'Usuário';
+            }
+        }
+
+        // Login com Google
+        async function loginWithGoogle() {
+            document.getElementById('login-loading').classList.add('visible');
+            document.getElementById('login-error').classList.remove('visible');
+
+            try {
+                await signInWithPopup(auth, googleProvider);
+                // onAuthStateChanged vai tratar o resto
+            } catch (error) {
+                console.error('Erro no login:', error);
+                showLoginError('Erro ao fazer login. Tente novamente.');
+            }
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                await signOut(auth);
+                currentUser = null;
+                userRole = null;
+                showLoginScreen();
+            } catch (error) {
+                console.error('Erro no logout:', error);
+                showToast('Erro ao sair', 'error');
+            }
+        }
+
+        // ========== ADMIN: Gerenciar Usuários ==========
+
+        // Carregar lista de usuários autorizados
+        async function loadAuthorizedUsers() {
+            try {
+                const snapshot = await getDocs(collection(db, 'usuarios'));
+                authorizedUsers = [];
+                snapshot.forEach(doc => {
+                    authorizedUsers.push({ email: doc.id, ...doc.data() });
+                });
+                renderAdminUserList();
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+        // Renderizar lista de usuários no admin
+        function renderAdminUserList() {
+            const container = document.getElementById('admin-user-list');
+            if (!container) return;
+
+            if (authorizedUsers.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.85rem;">Nenhum usuário cadastrado.</p>';
+                return;
+            }
+
+            container.innerHTML = authorizedUsers.map(user => `
+                <div class="user-item">
+                    <div class="user-item-info">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/36'}" class="user-item-avatar" alt="">
+                        <div>
+                            <div class="user-item-name">${user.name || user.email}</div>
+                            <div class="user-item-email">${user.email}</div>
+                        </div>
+                    </div>
+                    <div class="user-item-actions">
+                        <select class="role-select" onchange="updateUserRole('${user.email}', this.value)" ${user.email === currentUser?.email ? 'disabled' : ''}>
+                            <option value="viewer" ${user.role === 'viewer' ? 'selected' : ''}>Visualizador</option>
+                            <option value="editor" ${user.role === 'editor' ? 'selected' : ''}>Editor</option>
+                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                        </select>
+                        ${user.email !== currentUser?.email ? `<button class="btn-remove-user" onclick="removeUser('${user.email}')">🗑️</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            // Atualizar estatísticas
+            document.getElementById('admin-total-users').textContent = authorizedUsers.length;
+        }
+
+        // Adicionar novo usuário
+        async function addNewUser() {
+            const email = document.getElementById('new-user-email').value.trim().toLowerCase();
+            const role = document.getElementById('new-user-role').value;
+
+            if (!email || !email.includes('@')) {
+                showToast('Email inválido', 'error');
+                return;
+            }
+
+            try {
+                await setDoc(doc(db, 'usuarios', email), {
+                    email: email,
+                    role: role,
+                    createdAt: serverTimestamp(),
+                    createdBy: currentUser.email
+                });
+
+                document.getElementById('new-user-email').value = '';
+                showToast('Usuário adicionado!', 'success');
+                await loadAuthorizedUsers();
+            } catch (error) {
+                console.error('Erro ao adicionar usuário:', error);
+                showToast('Erro ao adicionar', 'error');
+            }
+        }
+
+        // Atualizar role do usuário
+        window.updateUserRole = async function(email, newRole) {
+            try {
+                await updateDoc(doc(db, 'usuarios', email), { role: newRole });
+                showToast('Permissão atualizada!', 'success');
+                await loadAuthorizedUsers();
+            } catch (error) {
+                console.error('Erro ao atualizar role:', error);
+                showToast('Erro ao atualizar', 'error');
+            }
+        };
+
+        // Remover usuário
+        window.removeUser = async function(email) {
+            if (!confirm(`Remover acesso de ${email}?`)) return;
+
+            try {
+                await deleteDoc(doc(db, 'usuarios', email));
+                showToast('Usuário removido!', 'success');
+                await loadAuthorizedUsers();
+            } catch (error) {
+                console.error('Erro ao remover usuário:', error);
+                showToast('Erro ao remover', 'error');
+            }
+        };
+
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
+            // Login button
+            document.getElementById('btn-google-login').addEventListener('click', loginWithGoogle);
+
+            // Logout button
+            document.getElementById('btn-logout').addEventListener('click', logout);
+
+            // Admin: Adicionar usuário
+            document.getElementById('btn-add-user')?.addEventListener('click', addNewUser);
+
             initNavigation();
             initSidebar();
             initModals();
@@ -1981,7 +2661,6 @@
             initMetas();
             initKanban();
             populateSelects();
-            loadData();
         });
 
         // Navegacao
@@ -2274,6 +2953,29 @@
                 updateDashboard();
                 renderHistoricoMensal();
             });
+
+            // Carregar usuários (se admin)
+            if (userRole === 'admin') {
+                loadAuthorizedUsers();
+            }
+
+            // Atualizar estatísticas do admin
+            updateAdminStats();
+        }
+
+        // Atualizar estatísticas do painel admin
+        function updateAdminStats() {
+            const el1 = document.getElementById('admin-total-apostilas');
+            const el2 = document.getElementById('admin-total-videos');
+            const el3 = document.getElementById('admin-total-cursos');
+
+            if (el1) el1.textContent = apostilas.length;
+            if (el2) el2.textContent = videoaulas.length;
+
+            // Contar cursos únicos
+            const cursosUnicos = new Set();
+            apostilas.forEach(a => a.curso && cursosUnicos.add(a.curso));
+            if (el3) el3.textContent = cursosUnicos.size;
         }
 
         async function loadMetas() {
