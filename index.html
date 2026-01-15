@@ -1298,6 +1298,72 @@
         .role-editor { background: rgba(59,130,246,0.3); }
         .role-viewer { background: rgba(34,197,94,0.3); }
 
+        /* === RESTRIÇÕES POR ROLE === */
+
+        /* Viewer: desabilita edições e esconde botões de ação */
+        body.role-viewer .modal-body input,
+        body.role-viewer .modal-body select,
+        body.role-viewer .modal-body textarea {
+            pointer-events: none;
+            opacity: 0.6;
+            background: rgba(255,255,255,0.05);
+        }
+
+        body.role-viewer .btn-primary[onclick*="atualizar"],
+        body.role-viewer #btn-salvar-disciplina,
+        body.role-viewer .btn-danger,
+        body.role-viewer .fab {
+            display: none !important;
+        }
+
+        /* Editor: esconde botão de excluir */
+        body.role-editor .btn-danger {
+            display: none !important;
+        }
+
+        /* Indicador visual de role no topo */
+        body.role-viewer::before {
+            content: '👁️ Modo Visualização';
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(34,197,94,0.9);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            border-radius: 0 0 8px 8px;
+            z-index: 9999;
+        }
+
+        body.role-editor::before {
+            content: '✏️ Modo Editor';
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(59,130,246,0.9);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            border-radius: 0 0 8px 8px;
+            z-index: 9999;
+        }
+
+        body.role-admin::before {
+            content: '👑 Admin';
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(239,68,68,0.9);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            border-radius: 0 0 8px 8px;
+            z-index: 9999;
+        }
+
         /* Botão Logout no Sidebar */
         .sidebar-user {
             padding: 16px;
@@ -2471,24 +2537,57 @@
             }
         }
 
+        // ========== SISTEMA DE PERMISSÕES ==========
+
+        // Verificar se pode criar
+        function canCreate() {
+            return userRole === 'admin' || userRole === 'editor';
+        }
+
+        // Verificar se pode editar
+        function canEdit() {
+            return userRole === 'admin' || userRole === 'editor';
+        }
+
+        // Verificar se pode excluir
+        function canDelete() {
+            return userRole === 'admin';
+        }
+
+        // Verificar se é admin
+        function isAdmin() {
+            return userRole === 'admin';
+        }
+
         // Aplicar restrições baseadas no role
         function applyRoleRestrictions() {
             const fab = document.querySelector('.fab');
             const deleteButtons = document.querySelectorAll('.btn-danger');
+            const editButtons = document.querySelectorAll('.modal-body input, .modal-body select, .modal-body textarea');
+            const saveButtons = document.querySelectorAll('.btn-primary[onclick*="atualizar"], #btn-salvar-disciplina');
 
             if (userRole === 'viewer') {
-                // Viewers não podem criar nem deletar
-                fab.style.display = 'none';
+                // Viewers: apenas visualizam
+                if (fab) fab.style.display = 'none';
                 deleteButtons.forEach(btn => btn.style.display = 'none');
+                // Desabilitar edição nos modais para viewers
+                document.body.classList.add('role-viewer');
+                document.body.classList.remove('role-editor', 'role-admin');
             } else if (userRole === 'editor') {
-                // Editors podem criar mas não deletar
-                fab.style.display = 'flex';
+                // Editors: podem criar e editar, mas não excluir
+                if (fab) fab.style.display = 'flex';
                 deleteButtons.forEach(btn => btn.style.display = 'none');
+                document.body.classList.add('role-editor');
+                document.body.classList.remove('role-viewer', 'role-admin');
             } else if (userRole === 'admin') {
-                // Admins podem tudo
-                fab.style.display = 'flex';
+                // Admins: podem tudo
+                if (fab) fab.style.display = 'flex';
                 deleteButtons.forEach(btn => btn.style.display = 'block');
+                document.body.classList.add('role-admin');
+                document.body.classList.remove('role-viewer', 'role-editor');
             }
+
+            console.log(`🔐 Permissões aplicadas: ${userRole} | Criar: ${canCreate()} | Editar: ${canEdit()} | Excluir: ${canDelete()}`);
         }
 
         // Label do role
@@ -3645,6 +3744,12 @@
 
         // Salvar nova disciplina (cria em apostilas, slides e videoaulas)
         async function salvarDisciplina() {
+            // Verificar permissão
+            if (!canCreate()) {
+                showToast('⛔ Sem permissão para criar', 'error');
+                return;
+            }
+
             const disciplina = document.getElementById('add-disciplina').value.trim();
             const curso = document.getElementById('add-curso').value;
             const ch = parseInt(document.getElementById('add-ch').value) || 0;
@@ -3792,6 +3897,12 @@
 
         // Atualizar APOSTILA
         async function atualizarApostila() {
+            // Verificar permissão
+            if (!canEdit()) {
+                showToast('⛔ Sem permissão para editar', 'error');
+                return;
+            }
+
             if (!currentEditId) return;
 
             try {
@@ -3825,6 +3936,12 @@
 
         // Atualizar SLIDES
         async function atualizarSlides() {
+            // Verificar permissão
+            if (!canEdit()) {
+                showToast('⛔ Sem permissão para editar', 'error');
+                return;
+            }
+
             if (!currentEditId) return;
 
             try {
@@ -3856,6 +3973,12 @@
 
         // Atualizar VIDEOAULA
         async function atualizarVideoaula() {
+            // Verificar permissão
+            if (!canEdit()) {
+                showToast('⛔ Sem permissão para editar', 'error');
+                return;
+            }
+
             if (!currentEditId) return;
 
             try {
@@ -3886,6 +4009,12 @@
 
         // Excluir DISCIPLINA (em cascata nas 3 coleções)
         async function excluirDisciplina() {
+            // Verificar permissão - APENAS ADMIN
+            if (!canDelete()) {
+                showToast('⛔ Apenas Admin pode excluir', 'error');
+                return;
+            }
+
             if (!currentEditId || !currentEditDisciplina) return;
 
             const confirmMsg = `Tem certeza?\n\nEsta ação é IRREVERSÍVEL e removerá a disciplina "${currentEditDisciplina}" de:\n• Apostilas\n• Slides\n• Videoaulas`;
