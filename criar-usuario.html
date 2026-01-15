@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Usuário - Firebase Auth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a5b4fc;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #4f46e5;
+            border-radius: 8px;
+            background: #16213e;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover { background: #4338ca; }
+        button:disabled { background: #6b7280; cursor: not-allowed; }
+        #log {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        .warning { color: #f59e0b; }
+        h1 { text-align: center; }
+        .card {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 Criar Usuário</h1>
+    <p style="text-align: center; color: #a5b4fc;">Sistema de autenticação CEDTEC</p>
+
+    <div class="card">
+        <div class="form-group">
+            <label>📧 Email do novo usuário</label>
+            <input type="email" id="user-email" placeholder="usuario@exemplo.com">
+        </div>
+
+        <div class="form-group">
+            <label>🔒 Senha inicial</label>
+            <input type="password" id="user-password" placeholder="Mínimo 6 caracteres">
+        </div>
+
+        <div class="form-group">
+            <label>👤 Nível de acesso</label>
+            <select id="user-role">
+                <option value="viewer">Visualizador - Apenas visualiza</option>
+                <option value="editor">Editor - Pode editar</option>
+                <option value="admin">Admin - Controle total</option>
+            </select>
+        </div>
+
+        <button onclick="criarUsuario()" id="btn-criar">✅ Criar Usuário</button>
+    </div>
+
+    <div id="log"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9XZmjgQZakDTEFGQS3v4bQ6LjKfsTmso",
+            authDomain: "controle-estudio-cedtec.firebaseapp.com",
+            projectId: "controle-estudio-cedtec",
+            storageBucket: "controle-estudio-cedtec.firebasestorage.app",
+            messagingSenderId: "883985328650",
+            appId: "1:883985328650:web:9d64ae88dc090a54b4cdf3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const logEl = document.getElementById('log');
+
+        function log(msg, type = '') {
+            const span = document.createElement('span');
+            span.className = type;
+            span.textContent = msg + '\n';
+            logEl.appendChild(span);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        window.criarUsuario = async function() {
+            const email = document.getElementById('user-email').value.trim().toLowerCase();
+            const password = document.getElementById('user-password').value;
+            const role = document.getElementById('user-role').value;
+
+            // Validações
+            if (!email || !email.includes('@')) {
+                log('❌ Email inválido!', 'error');
+                return;
+            }
+
+            if (!password || password.length < 6) {
+                log('❌ Senha deve ter pelo menos 6 caracteres!', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btn-criar');
+            btn.disabled = true;
+            btn.textContent = '⏳ Criando...';
+
+            try {
+                log(`📧 Criando usuário: ${email}`, 'info');
+
+                // 1. Criar no Firebase Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                log(`✅ Usuário criado no Firebase Auth!`, 'success');
+
+                // 2. Criar documento no Firestore
+                await setDoc(doc(db, 'usuarios', email), {
+                    email: email,
+                    role: role,
+                    createdAt: serverTimestamp(),
+                    createdBy: 'admin-script'
+                });
+                log(`✅ Permissões salvas no Firestore (${role})!`, 'success');
+
+                log(`\n🎉 SUCESSO!`, 'success');
+                log(`Email: ${email}`, 'info');
+                log(`Senha: ${password}`, 'warning');
+                log(`Nível: ${role}`, 'info');
+                log(`\n💡 Usuário pode fazer login no app agora!`, 'info');
+
+                // Limpar campos
+                document.getElementById('user-email').value = '';
+                document.getElementById('user-password').value = '';
+
+            } catch (error) {
+                console.error('Erro:', error);
+
+                if (error.code === 'auth/email-already-in-use') {
+                    log('❌ Este email já está cadastrado!', 'error');
+                } else if (error.code === 'auth/weak-password') {
+                    log('❌ Senha muito fraca! Use pelo menos 6 caracteres.', 'error');
+                } else if (error.code === 'auth/invalid-email') {
+                    log('❌ Formato de email inválido!', 'error');
+                } else {
+                    log(`❌ Erro: ${error.message}`, 'error');
+                }
+            }
+
+            btn.disabled = false;
+            btn.textContent = '✅ Criar Usuário';
+        };
+
+        // Permitir Enter para criar
+        document.getElementById('user-password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') window.criarUsuario();
+        });
+
+        log('🔐 Sistema de criação de usuários pronto!');
+        log('');
+        log('⚠️ IMPORTANTE:', 'warning');
+        log('Primeiro, habilite "Email/Senha" no Firebase Console:');
+        log('1. Acesse console.firebase.google.com');
+        log('2. Selecione o projeto "controle-estudio-cedtec"');
+        log('3. Vá em Authentication > Sign-in method');
+        log('4. Ative o provedor "Email/Senha"');
+        log('');
+    </script>
+</body>
+</html>
