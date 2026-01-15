@@ -921,6 +921,253 @@
             align-items: center;
             gap: 4px;
         }
+
+        /* ============== SCORE DIÁRIO PREVIEW (HOME) ============== */
+        .daily-score-preview {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .daily-score-preview .section-title {
+            margin-bottom: 12px;
+        }
+
+        .score-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .score-preview-item {
+            text-align: center;
+            padding: 8px 4px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+        }
+
+        .score-preview-item .score-icon {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .score-preview-item .score-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .score-preview-item .score-label {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+        }
+
+        /* View Toggle (Mês/Ano) */
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Histórico Mensal */
+        .historico-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .historico-item {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .historico-mes {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .historico-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .historico-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .historico-comparativo {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .comparativo-positivo {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .comparativo-negativo {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .comparativo-neutro {
+            background: rgba(148, 163, 184, 0.2);
+            color: var(--text-secondary);
+        }
+
+        /* ============== CURSOS - VISÃO GLOBAL ============== */
+        .cursos-summary {
+            display: flex;
+            justify-content: space-around;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .summary-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Disciplina Item Novo (para página Cursos) */
+        .disciplina-card {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .disciplina-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .disciplina-card-title {
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .disciplina-card-badges {
+            display: flex;
+            gap: 6px;
+        }
+
+        .disciplina-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-tag {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        .meta-tag.active {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .meta-tag.inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        /* Badge de Status do Curso */
+        .badge-nao-iniciado { background: rgba(239,68,68,0.2); color: var(--danger); }
+        .badge-parcial { background: rgba(245,158,11,0.2); color: var(--warning); }
+        .badge-completo { background: rgba(34,197,94,0.2); color: var(--success); }
+
+        /* Badge de Modelo */
+        .badge-modelo {
+            font-size: 0.55rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .modelo-antigo { background: rgba(148,163,184,0.2); color: var(--text-secondary); }
+        .modelo-2025 { background: rgba(59,130,246,0.2); color: var(--info); }
+        .modelo-2026 { background: rgba(168,85,247,0.2); color: #a855f7; }
+
+        /* Curso Progress Bar */
+        .curso-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .curso-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .curso-progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .curso-progress-text {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -944,7 +1191,6 @@
                 <button class="sidebar-close" id="sidebar-close">×</button>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" data-page="cursos">🎓 Cursos</a></li>
                 <li><a href="#" data-page="agenda">📅 Agenda</a></li>
                 <li><a href="#" data-page="kanban">📋 Kanban</a></li>
                 <li><a href="#" data-page="config">⚙️ Configurações</a></li>
@@ -956,6 +1202,40 @@
     <main class="container">
         <!-- Home -->
         <div id="page-home" class="page active">
+            <!-- Score Diário no Topo -->
+            <div class="daily-score-preview">
+                <h3 class="section-title">📊 Score de Hoje</h3>
+                <div class="score-preview-grid">
+                    <div class="score-preview-item">
+                        <span class="score-icon">🎬</span>
+                        <span class="score-value" id="score-hoje-gravacoes">0</span>
+                        <span class="score-label">Gravações</span>
+                    </div>
+                    <div class="score-preview-item">
+                        <span class="score-icon">✂️</span>
+                        <span class="score-value" id="score-hoje-edicoes">0</span>
+                        <span class="score-label">Edições</span>
+                    </div>
+                    <div class="score-preview-item">
+                        <span class="score-icon">📚</span>
+                        <span class="score-value" id="score-hoje-apostilas">0</span>
+                        <span class="score-label">Apostilas</span>
+                    </div>
+                    <div class="score-preview-item">
+                        <span class="score-icon">📑</span>
+                        <span class="score-value" id="score-hoje-slides">0</span>
+                        <span class="score-label">Slides</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alternância Mês/Ano -->
+            <div class="view-toggle">
+                <button class="toggle-btn active" data-view="mes">Mês</button>
+                <button class="toggle-btn" data-view="ano">Ano</button>
+            </div>
+
+            <!-- Dashboard Stats -->
             <div class="stats-grid">
                 <div class="stat-card large">
                     <svg class="progress-ring" viewBox="0 0 120 120">
@@ -963,8 +1243,8 @@
                         <circle class="progress" cx="60" cy="60" r="52"
                             stroke-dasharray="327" stroke-dashoffset="98" id="progress-circle"/>
                     </svg>
-                    <div class="stat-value" id="meta-horas">14h / 20h</div>
-                    <div class="stat-label">Meta Mensal de Produção</div>
+                    <div class="stat-value" id="meta-horas">0 / 120</div>
+                    <div class="stat-label" id="meta-periodo-label">Meta Mensal de Produção</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-gravacoes">0</div>
@@ -984,7 +1264,16 @@
                 </div>
             </div>
 
-            <h3 class="section-title">Atividades Recentes</h3>
+            <!-- Histórico Mês a Mês -->
+            <h3 class="section-title">📈 Histórico Mensal</h3>
+            <div id="historico-mensal" class="historico-list">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📈</div>
+                    <p>Carregando histórico...</p>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 20px;">🕐 Atividades Recentes</h3>
             <div id="atividades-recentes" class="item-list">
                 <div class="empty-state">
                     <div class="empty-state-icon">📋</div>
@@ -1117,12 +1406,37 @@
             </div>
         </div>
 
-        <!-- Cursos -->
+        <!-- Cursos - Visão Global -->
         <div id="page-cursos" class="page">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Buscar curso..." id="search-cursos">
+                <input type="text" class="search-input" placeholder="Buscar curso ou disciplina..." id="search-cursos">
             </div>
+
+            <!-- Filtros de Modelo e Status -->
+            <div class="filters" id="filtros-cursos">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="nao-iniciado">Não Iniciado</button>
+                <button class="filter-btn" data-filter="parcial">Parcial</button>
+                <button class="filter-btn" data-filter="concluido">Concluído</button>
+            </div>
+
+            <!-- Resumo Global -->
+            <div class="cursos-summary">
+                <div class="summary-item">
+                    <span class="summary-value" id="total-cursos-count">0</span>
+                    <span class="summary-label">Cursos</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-value" id="total-disciplinas-count">0</span>
+                    <span class="summary-label">Disciplinas</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-value" id="total-concluidas-count">0</span>
+                    <span class="summary-label">Concluídas</span>
+                </div>
+            </div>
+
             <div id="lista-cursos">
                 <div class="loading"><div class="spinner"></div></div>
             </div>
@@ -1224,11 +1538,15 @@
         </div>
     </main>
 
-    <!-- Bottom Navigation - 5 principais -->
+    <!-- Bottom Navigation - 6 principais -->
     <nav class="bottom-nav">
         <button class="nav-item active" data-page="home">
             <span class="nav-icon">🏠</span>
             Home
+        </button>
+        <button class="nav-item" data-page="metas">
+            <span class="nav-icon">🎯</span>
+            Metas
         </button>
         <button class="nav-item" data-page="apostilas">
             <span class="nav-icon">📚</span>
@@ -1242,9 +1560,9 @@
             <span class="nav-icon">🎥</span>
             Vídeos
         </button>
-        <button class="nav-item" data-page="metas">
-            <span class="nav-icon">🎯</span>
-            Metas
+        <button class="nav-item" data-page="cursos">
+            <span class="nav-icon">🎓</span>
+            Cursos
         </button>
     </nav>
 
@@ -1637,6 +1955,8 @@
         let currentDate = new Date();
         let currentMetaMonth = new Date();
         let kanbanFilter = 'todos';
+        let homeViewMode = 'mes'; // 'mes' ou 'ano'
+        let scores = []; // Array de scores diários
 
         // Dados de referencia
         const cursosRef = [
@@ -1765,6 +2085,9 @@
                             renderSlides(btn.dataset.filter);
                         } else if (filterContainer.id === 'filtros-videoaulas') {
                             renderVideoaulas(btn.dataset.filter);
+                        } else if (filterContainer.id === 'filtros-cursos') {
+                            cursosFilter = btn.dataset.filter;
+                            renderCursos('', cursosFilter);
                         }
                     });
                 });
@@ -1784,7 +2107,17 @@
             });
 
             document.getElementById('search-cursos').addEventListener('input', (e) => {
-                renderCursos(e.target.value);
+                renderCursos(e.target.value, cursosFilter);
+            });
+
+            // Toggle Mês/Ano na Home
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    homeViewMode = btn.dataset.view;
+                    updateDashboard();
+                });
             });
         }
 
@@ -1933,6 +2266,14 @@
 
             // Carregar metas
             loadMetas();
+
+            // Listener para scores diários
+            const qScores = query(collection(db, 'scores'), orderBy('data', 'desc'));
+            onSnapshot(qScores, (snapshot) => {
+                scores = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                updateDashboard();
+                renderHistoricoMensal();
+            });
         }
 
         async function loadMetas() {
@@ -2137,56 +2478,147 @@
             });
         }
 
-        // Renderizar Cursos
-        function renderCursos(search = '') {
+        // Renderizar Cursos - Nova visão global v4
+        let cursosFilter = 'todos';
+
+        function renderCursos(search = '', filter = cursosFilter) {
             const container = document.getElementById('lista-cursos');
 
-            // Agrupar por curso
+            // Criar estrutura de disciplinas únicas agrupadas por curso
+            // Cada disciplina aparece UMA vez, com status baseado em apostila + videoaula
             const cursosAgrupados = {};
 
-            [...apostilas, ...slides, ...videoaulas].forEach(item => {
-                if (!item.curso) return;
-                if (!cursosAgrupados[item.curso]) {
-                    cursosAgrupados[item.curso] = { apostilas: [], slides: [], videoaulas: [] };
-                }
-                if (item.qtdVideos !== undefined) {
-                    cursosAgrupados[item.curso].videoaulas.push(item);
-                } else if (item.obs !== undefined) {
-                    cursosAgrupados[item.curso].slides.push(item);
-                } else {
-                    cursosAgrupados[item.curso].apostilas.push(item);
+            // Primeiro, indexar apostilas e videoaulas por disciplina
+            const apostilasMap = {};
+            const videoaulasMap = {};
+
+            apostilas.forEach(a => {
+                if (a.disciplina) {
+                    apostilasMap[a.disciplina] = a;
                 }
             });
 
+            videoaulas.forEach(v => {
+                if (v.disciplina) {
+                    videoaulasMap[v.disciplina] = v;
+                }
+            });
+
+            // Criar lista única de disciplinas
+            const todasDisciplinas = new Set();
+            apostilas.forEach(a => { if (a.disciplina && a.curso) todasDisciplinas.add(a.disciplina); });
+            videoaulas.forEach(v => { if (v.disciplina && v.curso) todasDisciplinas.add(v.disciplina); });
+
+            // Agrupar por curso
+            todasDisciplinas.forEach(disciplina => {
+                const apostila = apostilasMap[disciplina];
+                const videoaula = videoaulasMap[disciplina];
+                const curso = apostila?.curso || videoaula?.curso;
+
+                if (!curso) return;
+
+                if (!cursosAgrupados[curso]) {
+                    cursosAgrupados[curso] = [];
+                }
+
+                // Determinar status da disciplina
+                const temApostila = apostila && apostila.status === 'concluido';
+                const temVideoaula = videoaula && videoaula.status === 'concluido';
+                const temSistema = apostila?.sistema || videoaula?.sistema || false;
+
+                let statusDisciplina = 'nao-iniciado';
+                if (temApostila && temVideoaula && temSistema) {
+                    statusDisciplina = 'concluido';
+                } else if (temApostila || temVideoaula) {
+                    statusDisciplina = 'parcial';
+                }
+
+                // Determinar modelo (antigo, 2025, 2026)
+                const modelo = apostila?.modelo || videoaula?.modelo || 'antigo';
+
+                cursosAgrupados[curso].push({
+                    disciplina,
+                    ch: apostila?.ch || videoaula?.ch || 0,
+                    codRev: apostila?.codRev || '',
+                    modelo,
+                    apostila: temApostila,
+                    videoaulas: temVideoaula,
+                    sistema: temSistema,
+                    prazo: apostila?.prazo || videoaula?.prazoEntrega || '',
+                    status: statusDisciplina
+                });
+            });
+
+            // Calcular totais para o resumo
+            let totalCursos = Object.keys(cursosAgrupados).length;
+            let totalDisciplinas = 0;
+            let totalConcluidas = 0;
+
+            Object.values(cursosAgrupados).forEach(disciplinas => {
+                totalDisciplinas += disciplinas.length;
+                totalConcluidas += disciplinas.filter(d => d.status === 'concluido').length;
+            });
+
+            document.getElementById('total-cursos-count').textContent = totalCursos;
+            document.getElementById('total-disciplinas-count').textContent = totalDisciplinas;
+            document.getElementById('total-concluidas-count').textContent = totalConcluidas;
+
+            // Renderizar cursos
             let html = '';
             Object.keys(cursosAgrupados).sort().forEach(curso => {
-                if (search && !curso.toLowerCase().includes(search.toLowerCase())) return;
+                let disciplinas = cursosAgrupados[curso];
 
-                const data = cursosAgrupados[curso];
-                const total = data.apostilas.length + data.slides.length + data.videoaulas.length;
+                // Filtrar por busca
+                if (search) {
+                    const s = search.toLowerCase();
+                    if (!curso.toLowerCase().includes(s)) {
+                        disciplinas = disciplinas.filter(d => d.disciplina.toLowerCase().includes(s));
+                        if (disciplinas.length === 0) return;
+                    }
+                }
+
+                // Filtrar por status
+                if (filter !== 'todos') {
+                    disciplinas = disciplinas.filter(d => d.status === filter);
+                    if (disciplinas.length === 0) return;
+                }
+
+                const concluidas = disciplinas.filter(d => d.status === 'concluido').length;
+                const total = disciplinas.length;
+                const pctConcluido = total > 0 ? Math.round((concluidas / total) * 100) : 0;
+
                 html += `
                     <div class="curso-card">
                         <div class="curso-header" data-curso="${curso}">
-                            <h3>🎓 ${curso}</h3>
-                            <span class="curso-count">${total} disciplinas</span>
+                            <div>
+                                <h3>🎓 ${curso}</h3>
+                                <div class="curso-progress">
+                                    <div class="curso-progress-bar">
+                                        <div class="curso-progress-fill" style="width: ${pctConcluido}%"></div>
+                                    </div>
+                                    <span class="curso-progress-text">${concluidas}/${total} concluídas</span>
+                                </div>
+                            </div>
+                            <span style="font-size: 1.2rem;">▼</span>
                         </div>
                         <div class="curso-disciplinas" id="disc-${curso.replace(/[^a-zA-Z0-9]/g, '')}">
-                            ${data.apostilas.map(a => `
-                                <div class="disciplina-item">
-                                    <span>📚 ${a.disciplina}</span>
-                                    <span class="item-badge ${getBadgeClass(a.status)}">${getStatusLabel(a.status)}</span>
-                                </div>
-                            `).join('')}
-                            ${data.slides.map(s => `
-                                <div class="disciplina-item">
-                                    <span>📑 ${s.disciplina}</span>
-                                    <span class="item-badge ${getBadgeClass(s.status)}">${getStatusLabel(s.status)}</span>
-                                </div>
-                            `).join('')}
-                            ${data.videoaulas.map(v => `
-                                <div class="disciplina-item">
-                                    <span>🎥 ${v.disciplina}</span>
-                                    <span class="item-badge ${getBadgeClass(v.status)}">${getStatusLabel(v.status)}</span>
+                            ${disciplinas.map(d => `
+                                <div class="disciplina-card">
+                                    <div class="disciplina-card-header">
+                                        <span class="disciplina-card-title">${d.disciplina}</span>
+                                        <div class="disciplina-card-badges">
+                                            <span class="badge-modelo ${getModeloClass(d.modelo)}">${d.modelo.toUpperCase()}</span>
+                                            <span class="item-badge ${getStatusCursoClass(d.status)}">${getStatusCursoLabel(d.status)}</span>
+                                        </div>
+                                    </div>
+                                    <div class="disciplina-card-meta">
+                                        <span class="meta-tag">⏱️ ${d.ch}h</span>
+                                        ${d.codRev ? `<span class="meta-tag">📋 ${d.codRev}</span>` : ''}
+                                        <span class="meta-tag ${d.apostila ? 'active' : 'inactive'}">📚 ${d.apostila ? 'Sim' : 'Não'}</span>
+                                        <span class="meta-tag ${d.videoaulas ? 'active' : 'inactive'}">🎥 ${d.videoaulas ? 'Sim' : 'Não'}</span>
+                                        <span class="meta-tag ${d.sistema ? 'active' : 'inactive'}">💻 ${d.sistema ? 'Sim' : 'Não'}</span>
+                                        ${d.prazo ? `<span class="meta-tag">📅 ${d.prazo}</span>` : ''}
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
@@ -2212,6 +2644,31 @@
                     document.getElementById('disc-' + curso)?.classList.toggle('expanded');
                 });
             });
+        }
+
+        // Helpers para Cursos
+        function getModeloClass(modelo) {
+            switch(modelo) {
+                case '2026': return 'modelo-2026';
+                case '2025': return 'modelo-2025';
+                default: return 'modelo-antigo';
+            }
+        }
+
+        function getStatusCursoClass(status) {
+            switch(status) {
+                case 'concluido': return 'badge-completo';
+                case 'parcial': return 'badge-parcial';
+                default: return 'badge-nao-iniciado';
+            }
+        }
+
+        function getStatusCursoLabel(status) {
+            switch(status) {
+                case 'concluido': return 'Concluído';
+                case 'parcial': return 'Parcial';
+                default: return 'Não Iniciado';
+            }
         }
 
         // Renderizar Agenda
@@ -2281,12 +2738,58 @@
 
         // Update Dashboard
         function updateDashboard() {
-            document.getElementById('total-apostilas').textContent = apostilas.length;
-            document.getElementById('total-videoaulas').textContent = videoaulas.length;
+            // Atualizar score de hoje
+            const hoje = new Date().toISOString().split('T')[0];
+            const scoreHoje = scores.find(s => s.data === hoje) || { gravacoes: 0, edicoes: 0, apostilas: 0, slides: 0 };
 
-            const concluidas = apostilas.filter(i => i.status === 'concluido').length;
-            document.getElementById('total-gravacoes').textContent = concluidas;
-            document.getElementById('total-slides').textContent = slides.length;
+            document.getElementById('score-hoje-gravacoes').textContent = scoreHoje.gravacoes || 0;
+            document.getElementById('score-hoje-edicoes').textContent = scoreHoje.edicoes || 0;
+            document.getElementById('score-hoje-apostilas').textContent = scoreHoje.apostilas || 0;
+            document.getElementById('score-hoje-slides').textContent = scoreHoje.slides || 0;
+
+            // Calcular totais baseado no modo (mês ou ano)
+            const agora = new Date();
+            const mesAtual = agora.getMonth();
+            const anoAtual = agora.getFullYear();
+
+            let scoresParaCalculo = scores;
+            let labelPeriodo = 'Meta Mensal de Produção';
+
+            if (homeViewMode === 'mes') {
+                scoresParaCalculo = scores.filter(s => {
+                    const data = new Date(s.data);
+                    return data.getMonth() === mesAtual && data.getFullYear() === anoAtual;
+                });
+                labelPeriodo = 'Meta Mensal de Produção';
+            } else {
+                scoresParaCalculo = scores.filter(s => {
+                    const data = new Date(s.data);
+                    return data.getFullYear() === anoAtual;
+                });
+                labelPeriodo = 'Meta Anual de Produção';
+            }
+
+            // Calcular totais do período
+            const totalGravacoes = scoresParaCalculo.reduce((sum, s) => sum + (s.gravacoes || 0), 0);
+            const totalEdicoes = scoresParaCalculo.reduce((sum, s) => sum + (s.edicoes || 0), 0);
+            const totalApostilasPeriodo = scoresParaCalculo.reduce((sum, s) => sum + (s.apostilas || 0), 0);
+            const totalSlidesPeriodo = scoresParaCalculo.reduce((sum, s) => sum + (s.slides || 0), 0);
+
+            // Definir metas
+            const metaMensal = homeViewMode === 'mes' ? 120 : 1440; // 120/mês ou 1440/ano
+
+            document.getElementById('total-gravacoes').textContent = totalGravacoes;
+            document.getElementById('total-videoaulas').textContent = totalEdicoes;
+            document.getElementById('total-apostilas').textContent = apostilas.filter(a => a.status === 'concluido').length;
+            document.getElementById('total-slides').textContent = slides.filter(s => s.status === 'concluido').length;
+
+            // Atualizar progress ring
+            const pctTotal = Math.min(100, Math.round((totalGravacoes / metaMensal) * 100));
+            const circumference = 327;
+            const offset = circumference - (pctTotal / 100) * circumference;
+            document.getElementById('progress-circle').style.strokeDashoffset = offset;
+            document.getElementById('meta-horas').textContent = `${totalGravacoes} / ${metaMensal}`;
+            document.getElementById('meta-periodo-label').textContent = labelPeriodo;
 
             // Atualizar atividades recentes
             const recentes = [...apostilas, ...slides, ...videoaulas]
@@ -2318,6 +2821,88 @@
                     </div>
                 `).join('');
             }
+        }
+
+        // Renderizar histórico mensal
+        function renderHistoricoMensal() {
+            const container = document.getElementById('historico-mensal');
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            // Agrupar scores por mês
+            const scoresPorMes = {};
+            const anoAtual = new Date().getFullYear();
+
+            scores.forEach(s => {
+                const data = new Date(s.data);
+                if (data.getFullYear() !== anoAtual) return;
+
+                const mesKey = data.getMonth();
+                if (!scoresPorMes[mesKey]) {
+                    scoresPorMes[mesKey] = { gravacoes: 0, edicoes: 0, apostilas: 0, slides: 0 };
+                }
+                scoresPorMes[mesKey].gravacoes += s.gravacoes || 0;
+                scoresPorMes[mesKey].edicoes += s.edicoes || 0;
+                scoresPorMes[mesKey].apostilas += s.apostilas || 0;
+                scoresPorMes[mesKey].slides += s.slides || 0;
+            });
+
+            // Ordenar por mês (mais recente primeiro)
+            const mesesOrdenados = Object.keys(scoresPorMes).map(Number).sort((a, b) => b - a);
+
+            if (mesesOrdenados.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📈</div>
+                        <p>Nenhum histórico disponível</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            mesesOrdenados.forEach((mesIdx, i) => {
+                const dados = scoresPorMes[mesIdx];
+                const totalMes = dados.gravacoes + dados.edicoes;
+
+                // Comparar com mês anterior
+                const mesAnterior = mesesOrdenados[i + 1];
+                let comparativo = '';
+                let classeComparativo = 'comparativo-neutro';
+
+                if (mesAnterior !== undefined) {
+                    const dadosAnterior = scoresPorMes[mesAnterior];
+                    const totalAnterior = dadosAnterior.gravacoes + dadosAnterior.edicoes;
+                    const diff = totalMes - totalAnterior;
+
+                    if (diff > 0) {
+                        comparativo = `+${diff}`;
+                        classeComparativo = 'comparativo-positivo';
+                    } else if (diff < 0) {
+                        comparativo = `${diff}`;
+                        classeComparativo = 'comparativo-negativo';
+                    } else {
+                        comparativo = '=';
+                    }
+                }
+
+                html += `
+                    <div class="historico-item">
+                        <div>
+                            <div class="historico-mes">${meses[mesIdx]}</div>
+                            <div class="historico-stats">
+                                <span>🎬 ${dados.gravacoes}</span>
+                                <span>✂️ ${dados.edicoes}</span>
+                                <span>📚 ${dados.apostilas}</span>
+                                <span>📑 ${dados.slides}</span>
+                            </div>
+                        </div>
+                        ${comparativo ? `<span class="historico-comparativo ${classeComparativo}">${comparativo}</span>` : ''}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
         }
 
         // Salvar nova disciplina (cria em apostilas, slides e videoaulas)
