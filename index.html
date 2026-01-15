@@ -17,19 +17,40 @@
             box-sizing: border-box;
         }
 
+        /* === TEMA AUTOMÁTICO (Light/Dark como iOS) === */
+
         :root {
             --primary: #4f46e5;
             --primary-dark: #4338ca;
-            --bg-dark: #1a1a2e;
-            --bg-card: #16213e;
-            --bg-card-hover: #1e2a4a;
-            --text-primary: #ffffff;
-            --text-secondary: #94a3b8;
             --success: #22c55e;
             --warning: #f59e0b;
             --danger: #ef4444;
             --info: #3b82f6;
             --cyan: #06b6d4;
+        }
+
+        /* MODO CLARO (padrão) */
+        :root {
+            --bg-dark: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f0f0f5;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --border-color: #d2d2d7;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* MODO ESCURO (automático quando sistema está em dark mode) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-dark: #1a1a2e;
+                --bg-card: #16213e;
+                --bg-card-hover: #1e2a4a;
+                --text-primary: #ffffff;
+                --text-secondary: #94a3b8;
+                --border-color: #2d3748;
+                --shadow: 0 1px 3px rgba(0,0,0,0.3);
+            }
         }
 
         body {
@@ -38,6 +59,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             padding-bottom: 80px;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* Header */
@@ -107,6 +129,8 @@
             z-index: 201;
             transition: right 0.3s ease;
             padding: 20px;
+            border-left: 1px solid var(--border-color);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.15);
         }
 
         .sidebar-overlay.active .sidebar {
@@ -169,7 +193,8 @@
             justify-content: space-around;
             padding: 8px 0;
             z-index: 100;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
         .nav-item {
@@ -225,6 +250,8 @@
             border-radius: 12px;
             padding: 16px;
             text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
 
         .stat-card.large {
@@ -280,11 +307,14 @@
             padding: 16px;
             cursor: pointer;
             transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
 
         .item-card:hover {
             background: var(--bg-card-hover);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .item-header {
@@ -405,6 +435,8 @@
             border-radius: 20px 20px 0 0;
             padding: 24px;
             overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
         }
 
         .modal-header {
@@ -444,15 +476,17 @@
             width: 100%;
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border-color);
             background: var(--bg-dark);
             color: var(--text-primary);
             font-size: 1rem;
+            transition: border-color 0.2s;
         }
 
         .form-input:focus, .form-select:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
 
         .btn {
@@ -1658,18 +1692,18 @@
                     <svg class="progress-ring" viewBox="0 0 120 120">
                         <circle class="bg" cx="60" cy="60" r="52"/>
                         <circle class="progress" cx="60" cy="60" r="52"
-                            stroke-dasharray="327" stroke-dashoffset="98" id="progress-circle"/>
+                            stroke-dasharray="327" stroke-dashoffset="327" id="progress-circle"/>
                     </svg>
-                    <div class="stat-value" id="meta-horas">0 / 120</div>
-                    <div class="stat-label" id="meta-periodo-label">Meta Mensal de Produção</div>
+                    <div class="stat-value" id="meta-horas">0h / 20h</div>
+                    <div class="stat-label" id="meta-periodo-label">Conteúdo Editado (Meta Mensal)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-gravacoes">0</div>
-                    <div class="stat-label">🎬 Gravações</div>
+                    <div class="stat-label">🎬 Vídeos Gravados</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-videoaulas">0</div>
-                    <div class="stat-label">🎥 Videoaulas</div>
+                    <div class="stat-label">🎥 Vídeos Editados</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-apostilas">0</div>
@@ -1678,6 +1712,23 @@
                 <div class="stat-card">
                     <div class="stat-value" id="total-slides">0</div>
                     <div class="stat-label">📑 Slides</div>
+                </div>
+            </div>
+
+            <!-- Meta Anual de Horas -->
+            <div class="meta-anual-card" style="background: var(--bg-card); border-radius: 12px; padding: 16px; margin-top: 16px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">📊 Meta Anual de Conteúdo</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);" id="meta-anual-horas">0h / 240h</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.7rem; color: var(--text-secondary);">Faltam</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; color: var(--warning);" id="meta-anual-faltam">240h</div>
+                    </div>
+                </div>
+                <div style="background: rgba(79,70,229,0.2); border-radius: 4px; height: 8px; margin-top: 12px; overflow: hidden;">
+                    <div id="progress-anual-bar" style="background: var(--primary); height: 100%; width: 0%; transition: width 0.5s;"></div>
                 </div>
             </div>
 
@@ -3584,49 +3635,78 @@
             document.getElementById('score-hoje-apostilas').textContent = scoreHoje.apostilas || 0;
             document.getElementById('score-hoje-slides').textContent = scoreHoje.slides || 0;
 
-            // Calcular totais baseado no modo (mês ou ano)
-            const agora = new Date();
-            const mesAtual = agora.getMonth();
-            const anoAtual = agora.getFullYear();
+            // ========== CALCULAR HORAS DE CONTEÚDO EDITADO ==========
+            // A minutagem vem das videoaulas concluídas/editadas
+            // Formato da minutagem: "HH:MM:SS" ou "MM:SS" ou número em minutos
 
-            let scoresParaCalculo = scores;
-            let labelPeriodo = 'Meta Mensal de Produção';
+            function parseMinutagem(minutagem) {
+                if (!minutagem) return 0;
+                if (typeof minutagem === 'number') return minutagem;
 
-            if (homeViewMode === 'mes') {
-                scoresParaCalculo = scores.filter(s => {
-                    const data = new Date(s.data);
-                    return data.getMonth() === mesAtual && data.getFullYear() === anoAtual;
-                });
-                labelPeriodo = 'Meta Mensal de Produção';
-            } else {
-                scoresParaCalculo = scores.filter(s => {
-                    const data = new Date(s.data);
-                    return data.getFullYear() === anoAtual;
-                });
-                labelPeriodo = 'Meta Anual de Produção';
+                const str = String(minutagem).trim();
+                if (!str) return 0;
+
+                // Formato HH:MM:SS ou MM:SS
+                const parts = str.split(':').map(p => parseInt(p) || 0);
+                if (parts.length === 3) {
+                    // HH:MM:SS -> converter para minutos
+                    return parts[0] * 60 + parts[1] + parts[2] / 60;
+                } else if (parts.length === 2) {
+                    // MM:SS -> converter para minutos
+                    return parts[0] + parts[1] / 60;
+                }
+                // Tentar como número direto (minutos)
+                return parseFloat(str) || 0;
             }
 
-            // Calcular totais do período
-            const totalGravacoes = scoresParaCalculo.reduce((sum, s) => sum + (s.gravacoes || 0), 0);
-            const totalEdicoes = scoresParaCalculo.reduce((sum, s) => sum + (s.edicoes || 0), 0);
-            const totalApostilasPeriodo = scoresParaCalculo.reduce((sum, s) => sum + (s.apostilas || 0), 0);
-            const totalSlidesPeriodo = scoresParaCalculo.reduce((sum, s) => sum + (s.slides || 0), 0);
+            // Calcular total de minutagem das videoaulas editadas/concluídas
+            const videoaulasEditadas = videoaulas.filter(v =>
+                v.status === 'concluido' || v.status === 'edicao'
+            );
 
-            // Definir metas
-            const metaMensal = homeViewMode === 'mes' ? 120 : 1440; // 120/mês ou 1440/ano
+            const totalMinutosEditados = videoaulasEditadas.reduce((sum, v) => {
+                return sum + parseMinutagem(v.minutagem);
+            }, 0);
 
-            document.getElementById('total-gravacoes').textContent = totalGravacoes;
-            document.getElementById('total-videoaulas').textContent = totalEdicoes;
+            // Converter minutos para horas
+            const totalHorasEditadas = Math.round(totalMinutosEditados / 60 * 10) / 10; // 1 casa decimal
+
+            // Metas de horas de conteúdo
+            const metaMensalHoras = 20;  // 20h por mês
+            const metaAnualHoras = 240;  // 240h por ano
+
+            // Atualizar UI - Meta Mensal (no ring principal)
+            const metaHorasAtual = homeViewMode === 'mes' ? metaMensalHoras : metaAnualHoras;
+            const labelPeriodo = homeViewMode === 'mes' ? 'Conteúdo Editado (Meta Mensal)' : 'Conteúdo Editado (Meta Anual)';
+
+            const pctHoras = Math.min(100, Math.round((totalHorasEditadas / metaHorasAtual) * 100));
+            const circumference = 327;
+            const offset = circumference - (pctHoras / 100) * circumference;
+
+            document.getElementById('progress-circle').style.strokeDashoffset = offset;
+            document.getElementById('meta-horas').textContent = `${totalHorasEditadas}h / ${metaHorasAtual}h`;
+            document.getElementById('meta-periodo-label').textContent = labelPeriodo;
+
+            // Atualizar Meta Anual
+            const horasFaltam = Math.max(0, metaAnualHoras - totalHorasEditadas);
+            const pctAnual = Math.min(100, (totalHorasEditadas / metaAnualHoras) * 100);
+
+            document.getElementById('meta-anual-horas').textContent = `${totalHorasEditadas}h / ${metaAnualHoras}h`;
+            document.getElementById('meta-anual-faltam').textContent = `${horasFaltam}h`;
+            document.getElementById('progress-anual-bar').style.width = `${pctAnual}%`;
+
+            // ========== OUTRAS MÉTRICAS ==========
+
+            // Contar vídeos gravados (qtdVideos das videoaulas)
+            const totalVideosGravados = videoaulas.reduce((sum, v) => sum + (v.qtdVideos || 0), 0);
+
+            // Contar vídeos editados (videoaulas com status concluido ou edicao)
+            const totalVideosEditados = videoaulasEditadas.reduce((sum, v) => sum + (v.qtdVideos || 0), 0);
+
+            document.getElementById('total-gravacoes').textContent = totalVideosGravados;
+            document.getElementById('total-videoaulas').textContent = totalVideosEditados;
             document.getElementById('total-apostilas').textContent = apostilas.filter(a => a.status === 'concluido').length;
             document.getElementById('total-slides').textContent = slides.filter(s => s.status === 'concluido').length;
-
-            // Atualizar progress ring
-            const pctTotal = Math.min(100, Math.round((totalGravacoes / metaMensal) * 100));
-            const circumference = 327;
-            const offset = circumference - (pctTotal / 100) * circumference;
-            document.getElementById('progress-circle').style.strokeDashoffset = offset;
-            document.getElementById('meta-horas').textContent = `${totalGravacoes} / ${metaMensal}`;
-            document.getElementById('meta-periodo-label').textContent = labelPeriodo;
 
             // Atualizar atividades recentes
             const recentes = [...apostilas, ...slides, ...videoaulas]
